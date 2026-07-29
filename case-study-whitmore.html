@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500&family=Source+Sans+3:wght@400;600;700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;}
+body{margin:0;background:#fff;}
+a{color:inherit;}
+/* mobile safety net */
+img{max-width:100%;}
+html,body{overflow-x:clip;}
+@media (max-width:960px){
+  [style*="grid-template-columns:repeat(3"],[style*="grid-template-columns:repeat(4"]{grid-template-columns:repeat(2,1fr) !important;}
+  [style*="grid-template-columns:1fr 1fr"]{grid-template-columns:1fr !important;}
+  [style*="display:flex"][style*="gap:54px"]{flex-direction:column !important;}
+  blockquote{font-size:22px !important;}
+  h2{font-size:28px !important;}
+}
+@media (max-width:620px){
+  [style*="grid-template-columns:repeat(2"],[style*="grid-template-columns:repeat(3"],[style*="grid-template-columns:repeat(4"]{grid-template-columns:1fr !important;}
+  section{padding-left:20px !important; padding-right:20px !important;}
+}
+
+@keyframes raRise{from{transform:translateY(14px);}to{transform:none;}}
+.ra-enter{animation:raRise .6s cubic-bezier(.2,.7,.2,1);}
+@keyframes riseIn{from{transform:translateY(16px);}to{transform:none;}}
+.hi1{animation:riseIn .55s cubic-bezier(.2,.7,.2,1) .05s backwards;}
+.hi2{animation:riseIn .55s cubic-bezier(.2,.7,.2,1) .15s backwards;}
+.hi3{animation:riseIn .55s cubic-bezier(.2,.7,.2,1) .25s backwards;}
+@keyframes plateOut{from{transform:translate(-20px,-20px);}to{transform:none;}}
+.plate-in{animation:plateOut 1s cubic-bezier(.2,.7,.2,1) .4s backwards;}
+.nl{position:relative; padding-bottom:4px;}
+.nl::after{content:""; position:absolute; left:0; bottom:0; width:0; height:2px; background:#AD8A57; transition:width .35s cubic-bezier(.2,.7,.2,1);}
+.nl:hover::after{width:100%;}
+.btn-l{transition:transform .3s cubic-bezier(.2,.7,.2,1), box-shadow .3s cubic-bezier(.2,.7,.2,1);}
+.btn-l:hover{transform:translateY(-2px); box-shadow:0 10px 24px rgba(120,94,52,.28);}
+.toned{filter:sepia(.16) saturate(.88) contrast(1.03);}
+.ph{overflow:hidden;}
+.ph img{transition:transform .8s cubic-bezier(.2,.7,.2,1);}
+.ph:hover img{transform:scale(1.045);}
+.fl{transition:color .25s ease;}
+.fl:hover{color:#AD8A57 !important;}
+.stat{overflow-wrap:anywhere; word-break:break-word; display:block;}
+.stat > div:last-child{max-width:240px; margin-left:auto; margin-right:auto;}
+.stat + .stat{border-left:1px solid rgba(58,47,28,.25);}
+@media (prefers-reduced-motion:reduce){.ra-enter,.hi1,.hi2,.hi3,.plate-in{animation:none;}}
+@media (max-width:960px){
+  section{padding:48px 24px !important;}
+  h1{font-size:34px !important;}
+  .m-col{flex-direction:column !important; gap:22px !important;}
+  .m-col > div{width:100% !important;}
+  .m-wrap{grid-template-columns:repeat(2,1fr) !important;}
+  .m-wrap > .stat{padding:16px 10px !important;}
+  .stat + .stat{border-left:none;}
+  .m-wrap .stat:nth-child(2n){border-left:1px solid rgba(58,47,28,.25) !important;}
+  .m-wrap .stat:nth-child(n+3){border-top:1px solid rgba(58,47,28,.25);}
+  .gal{grid-template-columns:1fr !important;}
+  .facts{grid-template-columns:1fr 1fr !important;}
+  .m-col-f{flex-direction:column !important; gap:34px !important;}
+  .m-col-f > div{width:auto !important;}
+  footer{padding-left:24px !important; padding-right:24px !important;}
+}
+.grain{position:relative; z-index:0;}
+.grain::before{content:""; position:absolute; inset:0; z-index:-1; pointer-events:none; opacity:.55; background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='140' height='140'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2' stitchTiles='stitch'/><feColorMatrix type='saturate' values='0'/></filter><rect width='140' height='140' filter='url(%23n)' opacity='0.06'/></svg>");}
+header{position:sticky !important; top:0 !important; z-index:9999 !important; will-change:transform; transition:transform .38s cubic-bezier(.2,.7,.2,1), box-shadow .38s ease;}
+html.nh header{transform:translateY(-105%) !important;}
+html.nf header{box-shadow:0 12px 34px rgba(10,27,36,.38) !important;}
+.ra-enter{isolation:auto;}
+.mburger{display:none;}
+.mcall{display:none;}
+@media (max-width:960px){
+  header{padding:0 18px !important;}
+  header > nav{display:none !important;}
+  .mburger{display:flex !important; align-items:center; justify-content:center; width:44px; height:44px; background:none; border:1px solid rgba(173,138,87,.55); border-radius:10px; cursor:pointer; padding:0;}
+  .mcall{display:inline-flex !important; align-items:center; justify-content:center; width:44px; height:44px; background:#AD8A57; border-radius:10px; text-decoration:none;}
+  .mtools{display:flex !important; align-items:center; gap:10px;}
+}
+.mtools{display:none;}
+.mpanel{position:fixed; inset:0; background:#0E242F; z-index:10000; transform:translateX(100%); transition:transform .42s cubic-bezier(.2,.7,.2,1); overflow-y:auto; -webkit-overflow-scrolling:touch; padding:20px 24px 48px; visibility:hidden;}
+html.mopen .mpanel{transform:none; visibility:visible;}
+html.mopen{overflow:hidden;}
+html.mopen body{overflow:hidden;}
+@media (max-width:960px){
+  section{padding:48px 24px !important;}
+  h1{font-size:34px !important; line-height:1.12 !important;}
+  h3{font-size:20px !important;}
+  footer{padding-left:24px !important; padding-right:24px !important;}
+  img[style*="height:400px"]{height:260px !important;}
+  img[style*="height:430px"]{height:270px !important;}
+  img[style*="height:340px"]{height:230px !important;}
+  img[style*="height:250px"]{height:200px !important;}
+}
+.ddi{transition:background .22s ease, transform .22s cubic-bezier(.2,.7,.2,1), color .22s ease;}
+.ddarrow{opacity:0; transform:translateX(-6px); transition:opacity .22s ease, transform .22s cubic-bezier(.2,.7,.2,1); color:#AD8A57; font-size:13px;}
+.ddi:hover .ddarrow{opacity:1; transform:none;}
+@keyframes ddIn{from{opacity:0; transform:translateY(-8px);}to{opacity:1; transform:none;}}
+.ddpanel{animation:ddIn .26s cubic-bezier(.2,.7,.2,1);}
+@media (prefers-reduced-motion:reduce){.ddpanel{animation:none;} .ddi{transition:none;}}
+.ddpanel{left:50% !important; right:auto !important; margin-left:-235px;}
+.ddpanel::before{content:""; position:absolute; top:-18px; left:-24px; right:-24px; height:22px;}
+.ddpanel::after{content:""; position:absolute; left:0; right:0; bottom:-16px; height:16px;}
+@media (max-width:1180px){.ddpanel{left:auto !important; right:0 !important; margin-left:0;}}
+</style>
+<script>
+(function(){
+  var last=window.scrollY||0, r=document.documentElement;
+  function tick(){
+    var y=window.scrollY||0;
+    if(y<90){ r.classList.remove('nh'); r.classList.remove('nf'); }
+    else if(y>last+5){ r.classList.add('nh'); }
+    else if(y<last-5){ r.classList.remove('nh'); r.classList.add('nf'); }
+    last=y;
+  }
+  window.addEventListener('scroll', tick, {passive:true});
+  tick();
+})();
+</script>
+<script>
+(function(){
+  var r=document.documentElement;
+  document.addEventListener('click', function(e){
+    var o=e.target.closest && e.target.closest('[data-mopen]');
+    if(o){ e.preventDefault(); r.classList.add('mopen'); return; }
+    var c=e.target.closest && e.target.closest('[data-mclose]');
+    if(c){ r.classList.remove('mopen'); }
+  });
+  document.addEventListener('keydown', function(e){ if(e.key==='Escape') r.classList.remove('mopen'); });
+})();
+</script>
+</helmet>
+<div class="ra-enter" style="background:#fff; font-family:'Roboto',sans-serif;">
+
+  
+
+  <header style="position:relative; background:#0E242F; padding:0 40px; height:78px; display:flex; align-items:center; justify-content:space-between;">
+    <a href="index.html" style="display:flex; align-items:center; gap:13px; text-decoration:none;">
+      <img src="logo/mono-gold.png" alt="Rathbone Advertising" style="width:48px; height:48px; display:block;">
+      <div style="line-height:1;">
+        <div style="font-family:'Source Sans 3',sans-serif; font-weight:700; font-size:15px; letter-spacing:3px; color:#fff;">RATHBONE</div>
+        <div style="font-family:'Source Sans 3',sans-serif; font-weight:400; font-size:10px; letter-spacing:4.5px; color:#AD8A57; margin-top:3px;">ADVERTISING</div>
+      </div>
+    </a>
+    <nav style="display:flex; align-items:center; gap:26px;">
+      <a href="index.html" class="nl" style="font-family:'Source Sans 3',sans-serif; font-size:13px; font-weight:600; letter-spacing:1.8px; color:#FBF5EA; text-decoration:none;">HOME</a>
+      <a href="about.html" class="nl" style="font-family:'Source Sans 3',sans-serif; font-size:13px; font-weight:600; letter-spacing:1.8px; color:#FBF5EA; text-decoration:none;">ABOUT</a>
+      <div onMouseEnter="{{ openNav }}" onMouseLeave="{{ closeNav }}" style="position:relative; padding:28px 0; display:flex; align-items:center;">
+        <a href="media-solutions.html" class="nl" aria-haspopup="true" onFocus="{{ openNav }}" style="font-family:'Source Sans 3',sans-serif; font-size:13px; font-weight:600; letter-spacing:1.8px; color:#FBF5EA; text-decoration:none;">MEDIA SOLUTIONS ▾</a>
+        <sc-if value="{{ navOpen }}" hint-placeholder-val="{{ false }}">
+          <div class="ddpanel" style="position:absolute; top:100%; right:0; width:470px; background:#0c1f29; border-top:3px solid #AD8A57; box-shadow:0 26px 60px rgba(0,0,0,.45); padding:26px 32px; display:flex; gap:36px; z-index:60;">
+            <div style="flex:1;">
+              <div style="font-family:'Source Sans 3',sans-serif; font-size:11px; font-weight:700; letter-spacing:2.5px; color:#AD8A57; text-transform:uppercase; margin-bottom:12px;">Traditional</div>
+              <sc-for list="{{ tradItems }}" as="item" hint-placeholder-count="7">
+                <a href="{{ item.href }}" style="display:block; font-family:'Source Sans 3',sans-serif; font-size:14px; padding:6px 0; text-decoration:none; color:#dfe6ea;">{{ item.name }}</a>
+              </sc-for>
+            </div>
+            <div style="width:1px; background:rgba(255,255,255,.12);"></div>
+            <div style="flex:1;">
+              <div style="font-family:'Source Sans 3',sans-serif; font-size:11px; font-weight:700; letter-spacing:2.5px; color:#AD8A57; text-transform:uppercase; margin-bottom:12px;">Digital</div>
+              <sc-for list="{{ digitalItems }}" as="item" hint-placeholder-count="6">
+                <a href="{{ item.href }}" style="display:block; font-family:'Source Sans 3',sans-serif; font-size:14px; padding:6px 0; text-decoration:none; color:#dfe6ea;">{{ item.name }}</a>
+              </sc-for>
+            </div>
+          </div>
+        </sc-if>
+      </div>
+      <a href="our-work.html" class="nl" style="font-family:'Source Sans 3',sans-serif; font-size:13px; font-weight:600; letter-spacing:1.8px; color:#AD8A57; text-decoration:none;">OUR WORK</a>
+      <a href="contact.html" class="nl" style="font-family:'Source Sans 3',sans-serif; font-size:13px; font-weight:600; letter-spacing:1.8px; color:#FBF5EA; text-decoration:none;">CONTACT</a>
+      <a href="{{ phoneHref }}" class="btn-l" style="display:inline-flex; align-items:center; gap:8px; background:#AD8A57; color:#0E242F; font-family:'Source Sans 3',sans-serif; font-weight:700; font-size:13px; letter-spacing:.8px; padding:11px 18px; text-decoration:none; border-radius:24px;">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#0E242F" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+        {{ phone }}
+      </a>
+    </nav>
+        <div class="mtools">
+        <a href="tel:+442045719820" class="mcall" aria-label="Call Rathbone Advertising">
+          <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#0E242F" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+        </a>
+        <button class="mburger" data-mopen="1" aria-label="Open menu">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#AD8A57" stroke-width="2" stroke-linecap="round"><path d="M3 6h18M3 12h18M3 18h18"></path></svg>
+        </button>
+      </div>
+    </header>
+
+  <div class="mpanel">
+    <div style="display:flex; align-items:center; justify-content:space-between; height:58px; margin-bottom:18px;">
+      <a href="index.html" data-mclose="1" style="display:flex; align-items:center; gap:11px; text-decoration:none;">
+        <img src="logo/mono-gold.png" alt="Rathbone Advertising" style="width:40px; height:40px; display:block;">
+        <div style="line-height:1;">
+          <div style="font-family:'Source Sans 3',sans-serif; font-weight:700; font-size:13px; letter-spacing:2.6px; color:#fff;">RATHBONE</div>
+          <div style="font-family:'Source Sans 3',sans-serif; font-size:9px; letter-spacing:4px; color:#AD8A57; margin-top:3px;">ADVERTISING</div>
+        </div>
+      </a>
+      <button data-mclose="1" aria-label="Close menu" style="width:44px; height:44px; background:none; border:1px solid rgba(255,255,255,.25); border-radius:10px; cursor:pointer; display:flex; align-items:center; justify-content:center;">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#FBF5EA" stroke-width="2" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"></path></svg>
+      </button>
+    </div>
+    <div style="display:flex; flex-direction:column; gap:2px; margin-bottom:26px;">
+      <a href="index.html" data-mclose="1" style="font-family:'Playfair Display',serif; font-size:26px; color:#FBF5EA; text-decoration:none; padding:11px 0;">Home</a>
+      <a href="about.html" data-mclose="1" style="font-family:'Playfair Display',serif; font-size:26px; color:#FBF5EA; text-decoration:none; padding:11px 0;">About</a>
+      <a href="our-work.html" data-mclose="1" style="font-family:'Playfair Display',serif; font-size:26px; color:#FBF5EA; text-decoration:none; padding:11px 0;">Our Work</a>
+      <a href="media-solutions.html" data-mclose="1" style="font-family:'Playfair Display',serif; font-size:26px; color:#FBF5EA; text-decoration:none; padding:11px 0;">Media Solutions</a>
+      <a href="contact.html" data-mclose="1" style="font-family:'Playfair Display',serif; font-size:26px; color:#FBF5EA; text-decoration:none; padding:11px 0;">Contact</a>
+    </div>
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:22px; padding-top:22px; border-top:1px solid rgba(255,255,255,.14);">
+      <div>
+        <div style="font-family:'Source Sans 3',sans-serif; font-size:11px; font-weight:700; letter-spacing:2.4px; color:#AD8A57; text-transform:uppercase; margin-bottom:8px;">Traditional</div>
+            <a href="outdoor.html" data-mclose="1" style="display:block; font-family:'Source Sans 3',sans-serif; font-size:15px; color:#dfe6ea; text-decoration:none; padding:9px 0; border-bottom:1px solid rgba(255,255,255,.08);">Outdoor</a>
+            <a href="press.html" data-mclose="1" style="display:block; font-family:'Source Sans 3',sans-serif; font-size:15px; color:#dfe6ea; text-decoration:none; padding:9px 0; border-bottom:1px solid rgba(255,255,255,.08);">Press</a>
+            <a href="radio.html" data-mclose="1" style="display:block; font-family:'Source Sans 3',sans-serif; font-size:15px; color:#dfe6ea; text-decoration:none; padding:9px 0; border-bottom:1px solid rgba(255,255,255,.08);">Radio</a>
+            <a href="cinema.html" data-mclose="1" style="display:block; font-family:'Source Sans 3',sans-serif; font-size:15px; color:#dfe6ea; text-decoration:none; padding:9px 0; border-bottom:1px solid rgba(255,255,255,.08);">Cinema</a>
+            <a href="tv.html" data-mclose="1" style="display:block; font-family:'Source Sans 3',sans-serif; font-size:15px; color:#dfe6ea; text-decoration:none; padding:9px 0; border-bottom:1px solid rgba(255,255,255,.08);">TV</a>
+            <a href="direct-response.html" data-mclose="1" style="display:block; font-family:'Source Sans 3',sans-serif; font-size:15px; color:#dfe6ea; text-decoration:none; padding:9px 0; border-bottom:1px solid rgba(255,255,255,.08);">Direct Response</a>
+            <a href="ambient.html" data-mclose="1" style="display:block; font-family:'Source Sans 3',sans-serif; font-size:15px; color:#dfe6ea; text-decoration:none; padding:9px 0; border-bottom:1px solid rgba(255,255,255,.08);">Ambient</a>
+      </div>
+      <div>
+        <div style="font-family:'Source Sans 3',sans-serif; font-size:11px; font-weight:700; letter-spacing:2.4px; color:#AD8A57; text-transform:uppercase; margin-bottom:8px;">Digital</div>
+            <a href="paid-search.html" data-mclose="1" style="display:block; font-family:'Source Sans 3',sans-serif; font-size:15px; color:#dfe6ea; text-decoration:none; padding:9px 0; border-bottom:1px solid rgba(255,255,255,.08);">Paid Search</a>
+            <a href="paid-social.html" data-mclose="1" style="display:block; font-family:'Source Sans 3',sans-serif; font-size:15px; color:#dfe6ea; text-decoration:none; padding:9px 0; border-bottom:1px solid rgba(255,255,255,.08);">Paid Social</a>
+            <a href="online-video.html" data-mclose="1" style="display:block; font-family:'Source Sans 3',sans-serif; font-size:15px; color:#dfe6ea; text-decoration:none; padding:9px 0; border-bottom:1px solid rgba(255,255,255,.08);">Online Video</a>
+            <a href="display.html" data-mclose="1" style="display:block; font-family:'Source Sans 3',sans-serif; font-size:15px; color:#dfe6ea; text-decoration:none; padding:9px 0; border-bottom:1px solid rgba(255,255,255,.08);">Display</a>
+            <a href="native.html" data-mclose="1" style="display:block; font-family:'Source Sans 3',sans-serif; font-size:15px; color:#dfe6ea; text-decoration:none; padding:9px 0; border-bottom:1px solid rgba(255,255,255,.08);">Native</a>
+            <a href="audio.html" data-mclose="1" style="display:block; font-family:'Source Sans 3',sans-serif; font-size:15px; color:#dfe6ea; text-decoration:none; padding:9px 0; border-bottom:1px solid rgba(255,255,255,.08);">Audio</a>
+      </div>
+    </div>
+    <a href="tel:+442045719820" style="display:flex; align-items:center; justify-content:center; gap:11px; margin-top:30px; background:#AD8A57; color:#0E242F; font-family:'Source Sans 3',sans-serif; font-weight:700; font-size:17px; padding:16px 24px; text-decoration:none; border-radius:30px;">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0E242F" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+      Call 020 4571 9820
+    </a>
+    <div style="text-align:center; font-family:'Roboto',sans-serif; font-size:12.5px; color:rgba(255,255,255,.5); margin-top:14px;">Mon–Fri · 9:00–17:30 · UK-wide</div>
+  </div>
+
+  <!-- hero -->
+  <section class="grain" style="background:#FBF5EA; padding:56px 64px;">
+    <div class="m-col" style="max-width:1280px; margin:0 auto; display:flex; gap:54px; align-items:center;">
+      <div style="flex:1.05;">
+        <div class="hi1" style="display:flex; gap:10px; flex-wrap:wrap; margin-bottom:20px;">
+          <span style="display:inline-flex; align-items:center; gap:8px; background:#fff; border:1px solid #e6d8bd; border-radius:24px; padding:7px 16px; font-family:'Source Sans 3',sans-serif; font-size:12px; font-weight:700; letter-spacing:1.5px; color:#0E242F;"><span style="width:8px; height:8px; border-radius:50%; background:#AD8A57;"></span>RETAIL · KITCHENS</span>
+          <span style="background:#AD8A57; border-radius:24px; padding:7px 16px; font-family:'Source Sans 3',sans-serif; font-size:12px; font-weight:700; letter-spacing:1px; color:#0E242F;">Sample study</span>
+        </div>
+        <h1 class="hi2" style="font-family:'Playfair Display',serif; font-weight:600; font-size:46px; line-height:1.08; color:#0E242F; margin:0 0 18px;">Filling a quiet mid-week showroom for an independent kitchen retailer.</h1>
+        <p class="hi3" style="font-size:18px; line-height:1.62; color:#555; margin:0; max-width:560px; text-wrap:pretty;">Radio for reach, 48-sheets on the two arterial roads into town, and search to catch the people the other two channels sent looking.</p>
+      </div>
+      <div style="flex:1; position:relative;">
+        <div class="plate-in" style="position:absolute; inset:-14px -14px auto auto; width:100%; height:100%; border:1px solid #ddd0b4;"></div>
+        <div class="ph" style="position:relative; box-shadow:0 4px 10px rgba(120,94,52,.10), 0 22px 50px rgba(120,94,52,.18);">
+          <img src="assets/placement-billboard-biker.webp" alt="The 48-sheet campaign on a high street" class="toned" style="display:block; width:100%; height:400px; object-fit:cover;">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- results band -->
+  <section style="background:#A48455; padding:36px 64px;">
+    <div class="m-wrap" style="max-width:1280px; margin:0 auto; display:grid; grid-template-columns:repeat(4,1fr);">
+      <sc-for list="{{ results }}" as="item" hint-placeholder-count="4">
+        <div class="stat" style="min-width:0; padding:0 22px; text-align:center;">
+          <div style="font-family:'Playfair Display',serif; font-weight:600; font-size:38px; color:#3a2f1c; line-height:1;">{{ item.figure }}</div>
+          <div style="font-size:13px; line-height:1.4; color:rgba(58,47,28,.85); margin-top:8px;">{{ item.label }}</div>
+        </div>
+      </sc-for>
+    </div>
+  </section>
+
+  <!-- narrative -->
+  <section style="background:#fff; padding:74px 64px;">
+    <div class="m-col" style="max-width:1280px; margin:0 auto; display:flex; gap:54px; align-items:flex-start;">
+      <div style="flex:1.4;">
+        <sc-for list="{{ chapters }}" as="item" hint-placeholder-count="4">
+          <div style="margin-bottom:34px;">
+            <div style="font-family:'Source Sans 3',sans-serif; font-size:12px; font-weight:700; letter-spacing:3px; text-transform:uppercase; color:#AD8A57; margin-bottom:10px;">{{ item.kicker }}</div>
+            <h2 style="font-family:'Playfair Display',serif; font-weight:600; font-size:28px; line-height:1.2; color:#0E242F; margin:0 0 14px;">{{ item.title }}</h2>
+            <p style="font-size:16.5px; line-height:1.68; color:#555; margin:0; text-wrap:pretty;">{{ item.body }}</p>
+          </div>
+        </sc-for>
+      </div>
+      <div style="flex:1; background:#FBF5EA; border-radius:16px; padding:30px 28px; box-shadow:0 2px 6px rgba(120,94,52,.08), 0 16px 36px rgba(120,94,52,.12);">
+        <div style="font-family:'Source Sans 3',sans-serif; font-size:12px; font-weight:700; letter-spacing:2.5px; text-transform:uppercase; color:#AD8A57; margin-bottom:18px;">Campaign at a glance</div>
+        <div class="facts" style="display:grid; grid-template-columns:1fr; gap:16px;">
+          <sc-for list="{{ facts }}" as="item" hint-placeholder-count="6">
+            <div style="border-bottom:1px solid #e8dcc4; padding-bottom:12px;">
+              <div style="font-family:'Source Sans 3',sans-serif; font-size:11px; font-weight:700; letter-spacing:1.8px; text-transform:uppercase; color:#8a7a5a; margin-bottom:5px;">{{ item.label }}</div>
+              <div style="font-family:'Source Sans 3',sans-serif; font-weight:700; font-size:15.5px; color:#0E242F; line-height:1.4;">{{ item.value }}</div>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- creative gallery -->
+  <section class="grain" style="background:#FBF5EA; padding:74px 64px;">
+    <div style="max-width:1280px; margin:0 auto;">
+      <div style="margin-bottom:32px;">
+        <div style="font-family:'Source Sans 3',sans-serif; font-size:12px; font-weight:700; letter-spacing:3px; text-transform:uppercase; color:#AD8A57; margin-bottom:12px;">The creative</div>
+        <h2 style="font-family:'Playfair Display',serif; font-weight:600; font-size:32px; color:#0E242F; margin:0 0 8px;">One message, three places it landed</h2>
+        <p style="font-size:16px; color:#8a7a5a; margin:0;">Scripted, designed and produced in-house, so the radio ad and the poster said the same thing.</p>
+      </div>
+      <div class="gal" style="display:grid; grid-template-columns:repeat(3,1fr); gap:22px;">
+        <figure style="margin:0;">
+          <div class="ph" style="border-radius:10px; box-shadow:0 3px 8px rgba(120,94,52,.10), 0 18px 40px rgba(120,94,52,.14);">
+            <img src="assets/placement-billboard-biker.webp" alt="The 48-sheet poster on a high street" class="toned" style="display:block; width:100%; height:230px; object-fit:cover;">
+          </div>
+          <figcaption style="font-size:13.5px; line-height:1.55; color:#6b5c40; padding:12px 2px 0;"><strong style="color:#0E242F;">48-sheet outdoor</strong> — two arterial road sites, seen twice daily by the commuter audience</figcaption>
+        </figure>
+        <figure style="margin:0;">
+          <div class="ph" style="border-radius:10px; box-shadow:0 3px 8px rgba(120,94,52,.10), 0 18px 40px rgba(120,94,52,.14);">
+            <img src="assets/host-studio-web.webp" alt="Radio production in a studio" class="toned" style="display:block; width:100%; height:230px; object-fit:cover;">
+          </div>
+          <figcaption style="font-size:13.5px; line-height:1.55; color:#6b5c40; padding:12px 2px 0;"><strong style="color:#0E242F;">Radio production</strong> — a 30-second spot in breakfast and drive-time, voiced and mixed in-house</figcaption>
+        </figure>
+        <figure style="margin:0;">
+          <div class="ph" style="border-radius:10px; box-shadow:0 3px 8px rgba(120,94,52,.10), 0 18px 40px rgba(120,94,52,.14);">
+            <img src="assets/placement-v4-display.webp" alt="A search and display advert on screen" class="toned" style="display:block; width:100%; height:230px; object-fit:cover;">
+          </div>
+          <figcaption style="font-size:13.5px; line-height:1.55; color:#6b5c40; padding:12px 2px 0;"><strong style="color:#0E242F;">Paid search</strong> — capturing the searches the broadcast media created</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- quote -->
+  <section style="background:#fff; padding:78px 64px; text-align:center;">
+    <div style="max-width:880px; margin:0 auto;">
+      <div style="font-family:'Playfair Display',serif; font-size:80px; color:#AD8A57; line-height:.5; height:38px;">“</div>
+      <blockquote style="font-family:'Playfair Display',serif; font-style:italic; font-weight:500; font-size:29px; line-height:1.42; color:#0E242F; margin:0 0 28px; text-wrap:pretty;">They wrote the ad, booked the right slots and told us to stop spending on the paper we'd always used. Our showroom hasn't been this busy on a Wednesday in years.</blockquote>
+      <div style="font-family:'Source Sans 3',sans-serif; font-weight:700; font-size:15px; color:#0E242F;">Sarah Whitmore</div>
+      <div style="font-size:14px; color:#8a7a5a; margin-top:3px;">Owner, Whitmore &amp; Sons Kitchens</div>
+    </div>
+  </section>
+
+  <!-- cta -->
+  <section style="background:#0E242F; padding:72px 64px; text-align:center; color:#fff;">
+    <h2 style="font-family:'Playfair Display',serif; font-weight:600; font-size:38px; color:#fff; margin:0 0 16px;">Want a plan like this for your business?</h2>
+    <p style="font-size:17px; line-height:1.6; color:rgba(255,255,255,.8); max-width:560px; margin:0 auto 32px;">Tell us your budget and your quiet days — we'll tell you honestly what we'd do with them.</p>
+    <div style="display:flex; gap:18px; justify-content:center; flex-wrap:wrap;">
+      <a href="{{ phoneHref }}" class="btn-l" style="display:inline-flex; align-items:center; gap:11px; background:#AD8A57; color:#0E242F; font-family:'Source Sans 3',sans-serif; font-weight:700; font-size:19px; padding:18px 34px; text-decoration:none; border-radius:32px;">
+        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#0E242F" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+        Call {{ phone }}
+      </a>
+      <a href="our-work.html" class="btn-l" style="display:inline-flex; align-items:center; background:transparent; color:#FBF5EA; border:1.5px solid rgba(251,245,234,.5); font-family:'Source Sans 3',sans-serif; font-weight:700; font-size:19px; padding:18px 34px; text-decoration:none; border-radius:32px;">See more work</a>
+    </div>
+  </section>
+
+  <footer style="background:#0a1b24; padding:52px 64px 0;">
+    <div style="max-width:1280px; margin:0 auto;">
+      <div class="m-col-f" style="display:flex; gap:54px;">
+        <div style="width:280px;">
+          <div style="display:flex; align-items:center; gap:11px; margin-bottom:16px;">
+            <div style="width:42px; height:42px; flex:none; border-radius:50%; background:#AD8A57; display:flex; align-items:center; justify-content:center;"><img src="logo/mono-navy.png" alt="Rathbone Advertising" style="width:35px; height:35px; display:block;"></div>
+            <div style="line-height:1;"><div style="font-family:'Source Sans 3',sans-serif; font-weight:700; font-size:14px; letter-spacing:2.5px; color:#fff;">RATHBONE</div><div style="font-family:'Source Sans 3',sans-serif; font-size:9px; letter-spacing:4px; color:#AD8A57; margin-top:3px;">ADVERTISING</div></div>
+          </div>
+          <p style="font-size:13px; line-height:1.65; color:rgba(255,255,255,.6); margin:0;">Independent media specialists. Old-school values, brought to the modern media model.</p>
+        </div>
+        <div style="flex:1;">
+          <div style="font-family:'Source Sans 3',sans-serif; font-weight:700; font-size:12px; letter-spacing:2px; text-transform:uppercase; color:#AD8A57; margin-bottom:16px;">Quick Links</div>
+          <div style="display:flex; flex-direction:column; gap:9px;">
+            <a href="index.html" class="fl" style="font-size:14px; color:rgba(255,255,255,.78); text-decoration:none;">Home</a>
+            <a href="about.html" class="fl" style="font-size:14px; color:rgba(255,255,255,.78); text-decoration:none;">About Us</a>
+            <a href="media-solutions.html" class="fl" style="font-size:14px; color:rgba(255,255,255,.78); text-decoration:none;">Media Solutions</a>
+            <a href="our-work.html" class="fl" style="font-size:14px; color:rgba(255,255,255,.78); text-decoration:none;">Our Work</a>
+            <span class="fl" style="font-size:14px; color:rgba(255,255,255,.78); text-decoration:none;" style="font-size:14px; color:rgba(255,255,255,.45);">Privacy Policy (coming soon)</span>
+          </div>
+        </div>
+        <div style="flex:1;">
+          <div style="font-family:'Source Sans 3',sans-serif; font-weight:700; font-size:12px; letter-spacing:2px; text-transform:uppercase; color:#AD8A57; margin-bottom:16px;">Contact Us</div>
+          <a href="{{ phoneHref }}" style="display:block; font-size:14px; color:#fff; text-decoration:none; margin-bottom:9px;">{{ phone }}</a>
+          <a href="mailto:hello@rathboneadvertising.com" style="display:block; font-size:14px; color:rgba(255,255,255,.78); text-decoration:none; margin-bottom:9px;">{{ email }}</a>
+          <div style="font-size:13px; color:rgba(255,255,255,.55);">Mon–Fri · 9:00–17:30</div>
+        </div>
+        <div style="flex:1;">
+          <div style="font-family:'Source Sans 3',sans-serif; font-weight:700; font-size:12px; letter-spacing:2px; text-transform:uppercase; color:#AD8A57; margin-bottom:16px;">Accredited</div>
+          <div style="display:flex; flex-direction:column; gap:10px;">
+            <div style="border:1px solid rgba(255,255,255,.22); padding:9px 12px; font-family:'Source Sans 3',sans-serif; font-size:12px; color:rgba(255,255,255,.85); letter-spacing:.5px;">Google Partner</div>
+            <div style="border:1px solid rgba(255,255,255,.22); padding:9px 12px; font-family:'Source Sans 3',sans-serif; font-size:12px; color:rgba(255,255,255,.85); letter-spacing:.5px;">Microsoft Advertising Partner ’24</div>
+          </div>
+        </div>
+      </div>
+      <div style="border-top:1px solid rgba(255,255,255,.12); margin-top:42px; padding:22px 0; display:flex; justify-content:space-between; align-items:center;">
+        <div style="font-size:12px; color:rgba(255,255,255,.5);">© 2026 Rathbone Advertising. All rights reserved.</div>
+        <div style="font-family:'Source Sans 3',sans-serif; font-size:11px; letter-spacing:2px; text-transform:uppercase; color:rgba(173,138,87,.7);">Independent Media Specialists</div>
+      </div>
+    </div>
+  </footer>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1280,&quot;height&quot;:900}}">
+class Component extends DCLogic {
+  state = { navOpen: false };
+
+  results = [
+    { figure: "+64%", label: "showroom design appointments vs the previous ten weeks*" },
+    { figure: "£38", label: "cost per booked design visit, all media included*" },
+    { figure: "+11pts", label: "prompted brand awareness in the target towns*" },
+    { figure: "10 wks", label: "campaign length, from first call to final spot" }
+  ];
+  chapters = [
+    { kicker: "The challenge", title: "Busy Saturdays, empty Wednesdays.", body: "Whitmore & Sons had two showrooms and a closing rate most retailers would envy — once someone walked in. The problem was mid-week footfall. They'd been spending steadily in the same regional newspaper for eleven years and had no idea whether it still worked, and no way of finding out." },
+    { kicker: "The plan", title: "Reach in the morning, reminder on the road, capture at the point of intent.", body: "We planned media-neutral and the answer came back as three channels, not one. Radio breakfast and drive-time to build reach across the two towns. Two 48-sheets on the arterial roads people use to get to work, so the name was there twice a day. And a small search budget to catch the people the first two channels sent looking — because a kitchen is a considered purchase and nobody buys one from a poster." },
+    { kicker: "The buy", title: "Sharper rates, because we own nothing.", body: "As an independent with no media of our own, we tendered the radio across two station groups and took the better package. The outdoor was bought as a late-availability deal at a discount to rate card. The newspaper spend they'd been making for a decade was stopped, and that money moved into the channels above — the total budget didn't rise." },
+    { kicker: "The result", title: "Mid-week appointments up by nearly two thirds.", body: "Design appointments rose 64% against the previous ten weeks, at £38 per booked visit across all media. Prompted awareness in the two towns rose eleven points on a pre- and post-campaign survey. Most usefully for the client, we could tell them which channel drove which enquiry, so the next campaign started from evidence rather than habit." }
+  ];
+  facts = [
+    { label: "Client", value: "Whitmore & Sons Kitchens" },
+    { label: "Sector", value: "Independent kitchen retail, two showrooms" },
+    { label: "Objective", value: "Mid-week showroom appointments" },
+    { label: "Channels", value: "Radio · 48-sheet outdoor · Paid search" },
+    { label: "Budget band", value: "£15,000–£20,000" },
+    { label: "Duration", value: "10 weeks, Sept–Nov" },
+    { label: "Creative", value: "Scripted, cast and produced in-house" },
+    { label: "Measurement", value: "Call tracking, appointment log, pre/post survey" }
+  ];
+  gallery = [
+    { title: "48-sheet outdoor", note: "two arterial road sites, seen twice daily by the commuter audience", img: "assets/placement-billboard-biker.webp", alt: "The 48-sheet poster on a high street" },
+    { title: "Radio production", note: "a 30-second spot in breakfast and drive-time, voiced and mixed in-house", img: "assets/host-studio-web.webp", alt: "Radio production in a studio" },
+    { title: "Paid search", note: "capturing the searches the broadcast media created", img: "assets/placement-v4-display.webp", alt: "A search and display advert on screen" }
+  ];
+
+  trad = ["Outdoor", "Print", "Radio", "Cinema", "TV", "Direct Response", "Ambient"];
+  digital = ["Search", "Display", "Video", "Social Media", "Native", "Audio"];
+  navHrefs = {"Radio":"radio.html","Cinema":"cinema.html","TV":"tv.html","Outdoor":"outdoor.html","Print":"press.html","Search":"paid-search.html","Display":"display.html","Social Media":"paid-social.html","Video":"online-video.html","Direct Response":"direct-response.html","Ambient":"ambient.html","Audio":"audio.html","Native":"native.html"};
+  navItems(list) { return list.map(n => ({ name: n, href: this.navHrefs[n] || "#" })); }
+
+  phone = "020 4571 9820";
+  phoneHref = "tel:+442045719820";
+  email = "hello@rathboneadvertising.com";
+
+  renderVals() {
+    return {
+      results: this.results, chapters: this.chapters, facts: this.facts, gallery: this.gallery,
+      tradItems: this.navItems(this.trad), digitalItems: this.navItems(this.digital),
+      phone: this.phone, phoneHref: this.phoneHref, email: this.email,
+      navOpen: this.state.navOpen,
+      openNav: () => this.setState({ navOpen: true }),
+      closeNav: () => this.setState({ navOpen: false })
+    };
+  }
+}
+</script>
+</body>
+</html>

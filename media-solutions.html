@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500&family=Source+Sans+3:wght@400;600;700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;}
+body{margin:0;background:#fff;}
+a{color:inherit;}
+/* mobile safety net */
+img{max-width:100%;}
+html,body{overflow-x:clip;}
+@media (max-width:960px){
+  [style*="grid-template-columns:repeat(3"],[style*="grid-template-columns:repeat(4"]{grid-template-columns:repeat(2,1fr) !important;}
+  [style*="grid-template-columns:1fr 1fr"]{grid-template-columns:1fr !important;}
+  [style*="display:flex"][style*="gap:54px"]{flex-direction:column !important;}
+  blockquote{font-size:22px !important;}
+  h2{font-size:28px !important;}
+}
+@media (max-width:620px){
+  [style*="grid-template-columns:repeat(2"],[style*="grid-template-columns:repeat(3"],[style*="grid-template-columns:repeat(4"]{grid-template-columns:1fr !important;}
+  section{padding-left:20px !important; padding-right:20px !important;}
+}
+
+@keyframes raRise{from{transform:translateY(14px);}to{transform:none;}}
+.ra-enter{animation:raRise .6s cubic-bezier(.2,.7,.2,1);}
+@media (prefers-reduced-motion:reduce){.ra-enter{animation:none;}}
+.bcard .u{display:block; width:36px; height:3px; background:#AD8A57; margin-top:10px; transition:width .5s cubic-bezier(.2,.7,.2,1);}
+.bcard:hover .u{width:100%;}
+.stat{overflow-wrap:anywhere; word-break:break-word; display:block;}
+.stat > div:last-child{max-width:240px; margin-left:auto; margin-right:auto;}
+.stat + .stat{border-left:1px solid rgba(14,36,47,.22);}
+.frow{transition:background .3s ease;}
+.frow:hover{background:#FBF5EA;}
+.frow .fnum{transition:background .3s ease, color .3s ease;}
+.frow:hover .fnum{background:#AD8A57; color:#fff;}
+@keyframes plateOut{from{transform:translate(-20px,-20px);}to{transform:none;}}
+@keyframes cardOut{from{transform:translate(16px,16px);}to{transform:none;}}
+.plate-in{animation:plateOut 1s cubic-bezier(.2,.7,.2,1) .4s backwards;}
+.card-in{animation:cardOut 1s cubic-bezier(.2,.7,.2,1) .55s backwards;}
+@media (prefers-reduced-motion:reduce){.plate-in,.card-in{animation:none;}}
+@keyframes riseIn{from{transform:translateY(16px);}to{transform:none;}}
+.hi1{animation:riseIn .55s cubic-bezier(.2,.7,.2,1) .05s backwards;}
+.hi2{animation:riseIn .55s cubic-bezier(.2,.7,.2,1) .15s backwards;}
+.hi3{animation:riseIn .55s cubic-bezier(.2,.7,.2,1) .25s backwards;}
+.hi4{animation:riseIn .55s cubic-bezier(.2,.7,.2,1) .35s backwards;}
+.nl{position:relative; padding-bottom:4px;}
+.nl::after{content:""; position:absolute; left:0; bottom:0; width:0; height:2px; background:#AD8A57; transition:width .35s cubic-bezier(.2,.7,.2,1);}
+.nl:hover::after{width:100%;}
+.btn-l{transition:transform .3s cubic-bezier(.2,.7,.2,1), box-shadow .3s cubic-bezier(.2,.7,.2,1);}
+.btn-l:hover{transform:translateY(-2px); box-shadow:0 10px 24px rgba(120,94,52,.28);}
+.toned{filter:sepia(.16) saturate(.88) contrast(1.03);}
+.ph img{transition:transform .8s cubic-bezier(.2,.7,.2,1);}
+.ph:hover img{transform:scale(1.045);}
+.faqq{transition:background .3s ease;}
+.faqq:hover{background:rgba(173,138,87,.07);}
+.fl{transition:color .25s ease;}
+.fl:hover{color:#AD8A57 !important;}
+.stepc{transition:transform .35s cubic-bezier(.2,.7,.2,1);}
+.stepc:hover{transform:scale(1.08);}
+@media (prefers-reduced-motion:reduce){.hi1,.hi2,.hi3,.hi4{animation:none;}}
+@media (max-width:960px){
+  section{padding:48px 24px !important;}
+  h1{font-size:36px !important; margin-bottom:0 !important;}
+  .m-col{gap:22px !important;}
+  .hi1{margin-bottom:0 !important;}
+  .hi3{margin-bottom:0 !important;}
+  .hmicro{margin-top:0 !important;}
+  .m-col{flex-direction:column !important;}
+  .m-col > div{width:100% !important;}
+  .m-wrap{grid-template-columns:repeat(2,1fr) !important;}
+  .m-wrap > .stat{padding:16px 10px !important;}
+  .stat + .stat{border-left:none;}
+  .m-wrap .stat:nth-child(2n){border-left:1px solid rgba(58,47,28,.25) !important;}
+  .m-wrap .stat:nth-child(n+3){border-top:1px solid rgba(58,47,28,.25);}
+  .g4{grid-template-columns:repeat(2,1fr) !important;}
+  .steps{flex-wrap:wrap !important;}
+  .steps > div{flex:1 1 42% !important;}
+  .frow{flex-wrap:wrap !important;}
+  .ftitle{width:auto !important; flex:1 !important;}
+  .fdesc{flex-basis:100% !important;}
+  footer{padding-left:24px !important; padding-right:24px !important;}
+  .m-col-f{flex-direction:column !important; gap:34px !important;}
+  .m-col-f > div{width:auto !important;}
+  .hi4{flex-wrap:nowrap; gap:14px !important;}
+  .hi4 > a:first-child{font-size:14px !important; padding:12px 18px !important; gap:8px !important; flex:none;}
+  .hi4 > a:last-child{font-size:14px !important; white-space:nowrap;}
+  .herotext{display:contents;}
+  .hi1{order:1;}
+  .hi2{order:2;}
+  .heroimg{order:3; margin:4px 0 10px;}
+  .hi3{order:4;}
+  .hi4{order:5;}
+  .hmicro{order:6;}
+  .heroimg img{height:280px !important;}
+  .ph + .ph{display:none !important;}
+  .ph img{height:260px !important;}
+}
+@media (max-width:620px){
+  .g4{grid-template-columns:1fr !important;}
+  .steps > div{flex:1 1 100% !important;}
+}
+.grain{position:relative; z-index:0;}
+.grain::before{content:""; position:absolute; inset:0; z-index:-1; pointer-events:none; opacity:.55; background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='140' height='140'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2' stitchTiles='stitch'/><feColorMatrix type='saturate' values='0'/></filter><rect width='140' height='140' filter='url(%23n)' opacity='0.06'/></svg>");}
+header{position:sticky !important; top:0 !important; z-index:9999 !important; will-change:transform; transition:transform .38s cubic-bezier(.2,.7,.2,1), box-shadow .38s ease;}
+html.nh header{transform:translateY(-105%) !important;}
+html.nf header{box-shadow:0 12px 34px rgba(10,27,36,.38) !important;}
+.ra-enter{isolation:auto;}
+.mburger{display:none;}
+.mcall{display:none;}
+@media (max-width:960px){
+  header{padding:0 18px !important;}
+  header > nav{display:none !important;}
+  .mburger{display:flex !important; align-items:center; justify-content:center; width:44px; height:44px; background:none; border:1px solid rgba(173,138,87,.55); border-radius:10px; cursor:pointer; padding:0;}
+  .mcall{display:inline-flex !important; align-items:center; justify-content:center; width:44px; height:44px; background:#AD8A57; border-radius:10px; text-decoration:none;}
+  .mtools{display:flex !important; align-items:center; gap:10px;}
+}
+.mtools{display:none;}
+.mpanel{position:fixed; inset:0; background:#0E242F; z-index:10000; transform:translateX(100%); transition:transform .42s cubic-bezier(.2,.7,.2,1); overflow-y:auto; -webkit-overflow-scrolling:touch; padding:20px 24px 48px; visibility:hidden;}
+html.mopen .mpanel{transform:none; visibility:visible;}
+html.mopen{overflow:hidden;}
+html.mopen body{overflow:hidden;}
+.jwrap{position:relative;}
+.steps > div{position:relative; z-index:1;}
+.jline{position:absolute; top:31px; left:12.5%; right:12.5%; height:2px; background:rgba(173,138,87,.22); overflow:visible; z-index:0;}
+.jline::after{content:""; position:absolute; left:0; top:0; bottom:0; width:0; background:linear-gradient(90deg, rgba(173,138,87,.5), #AD8A57 60%, #e8cd9a); box-shadow:0 0 12px rgba(173,138,87,.55); transition:width 1.9s cubic-bezier(.25,.7,.25,1);}
+.jtip{position:absolute; top:50%; left:0; width:9px; height:9px; margin:-4.5px 0 0 -4.5px; border-radius:50%; background:#e8cd9a; box-shadow:0 0 14px 3px rgba(232,205,154,.6); opacity:0; transition:left 1.9s cubic-bezier(.25,.7,.25,1), opacity .5s ease;}
+html.jgo .jline::after{width:100%;}
+html.jgo .jtip{left:100%; opacity:1;}
+@media (max-width:960px){.jline{display:none;}}
+@media (prefers-reduced-motion:reduce){.jline::after{width:100%; transition:none;} .jtip{display:none;}}
+.ddi{transition:background .22s ease, transform .22s cubic-bezier(.2,.7,.2,1), color .22s ease;}
+.ddarrow{opacity:0; transform:translateX(-6px); transition:opacity .22s ease, transform .22s cubic-bezier(.2,.7,.2,1); color:#AD8A57; font-size:13px;}
+.ddi:hover .ddarrow{opacity:1; transform:none;}
+@keyframes ddIn{from{opacity:0; transform:translateY(-8px);}to{opacity:1; transform:none;}}
+.ddpanel{animation:ddIn .26s cubic-bezier(.2,.7,.2,1);}
+@media (prefers-reduced-motion:reduce){.ddpanel{animation:none;} .ddi{transition:none;}}
+.ddpanel{left:50% !important; right:auto !important; margin-left:-235px;}
+.ddpanel::before{content:""; position:absolute; top:-18px; left:-24px; right:-24px; height:22px;}
+.ddpanel::after{content:""; position:absolute; left:0; right:0; bottom:-16px; height:16px;}
+@media (max-width:1180px){.ddpanel{left:auto !important; right:0 !important; margin-left:0;}}
+</style>
+<script>
+(function(){
+  var last=window.scrollY||0, r=document.documentElement;
+  function tick(){
+    var y=window.scrollY||0;
+    if(y<90){ r.classList.remove('nh'); r.classList.remove('nf'); }
+    else if(y>last+5){ r.classList.add('nh'); }
+    else if(y<last-5){ r.classList.remove('nh'); r.classList.add('nf'); }
+    last=y;
+  }
+  window.addEventListener('scroll', tick, {passive:true});
+  tick();
+})();
+</script>
+<script>
+(function(){
+  var r=document.documentElement;
+  document.addEventListener('click', function(e){
+    var o=e.target.closest && e.target.closest('[data-mopen]');
+    if(o){ e.preventDefault(); r.classList.add('mopen'); return; }
+    var c=e.target.closest && e.target.closest('[data-mclose]');
+    if(c){ r.classList.remove('mopen'); }
+  });
+  document.addEventListener('keydown', function(e){ if(e.key==='Escape') r.classList.remove('mopen'); });
+})();
+</script>
+<script>
+(function(){
+  function init(){
+    var el=document.querySelector('.jline');
+    if(!el){ return setTimeout(init,150); }
+    var io=new IntersectionObserver(function(es){
+      es.forEach(function(e){ if(e.isIntersecting){ document.documentElement.classList.add('jgo'); io.disconnect(); } });
+    },{threshold:0.4});
+    io.observe(el.parentElement);
+  }
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',init); else init();
+})();
+</script>
+</helmet>
+<div class="ra-enter" style="background:#fff; font-family:'Roboto',sans-serif;">
+
+  <header style="position:relative; background:#0E242F; padding:0 40px; height:78px; display:flex; align-items:center; justify-content:space-between;">
+    <a href="index.html" style="display:flex; align-items:center; gap:13px; text-decoration:none;">
+      <img src="logo/mono-gold.png" alt="Rathbone Advertising" style="width:48px; height:48px; display:block;">
+      <div style="line-height:1;">
+        <div style="font-family:'Source Sans 3',sans-serif; font-weight:700; font-size:15px; letter-spacing:3px; color:#fff;">RATHBONE</div>
+        <div style="font-family:'Source Sans 3',sans-serif; font-weight:400; font-size:10px; letter-spacing:4.5px; color:#AD8A57; margin-top:3px;">ADVERTISING</div>
+      </div>
+    </a>
+    <nav style="display:flex; align-items:center; gap:26px;">
+      <a href="index.html" class="nl" style="font-family:'Source Sans 3',sans-serif; font-size:13px; font-weight:600; letter-spacing:1.8px; color:#FBF5EA; text-decoration:none;">HOME</a>
+      <a href="about.html" class="nl" style="font-family:'Source Sans 3',sans-serif; font-size:13px; font-weight:600; letter-spacing:1.8px; color:#FBF5EA; text-decoration:none;">ABOUT</a>
+      <div onMouseEnter="{{ openNav }}" onMouseLeave="{{ closeNav }}" style="position:relative; padding:28px 0; display:flex; align-items:center;">
+        <a href="media-solutions.html" class="nl" aria-haspopup="true" onFocus="{{ openNav }}" style="font-family:'Source Sans 3',sans-serif; font-size:13px; font-weight:600; letter-spacing:1.8px; color:#AD8A57; text-decoration:none;">MEDIA SOLUTIONS ▾</a>
+        <sc-if value="{{ navOpen }}" hint-placeholder-val="{{ false }}">
+          <div class="ddpanel" style="position:absolute; top:100%; right:0; width:470px; background:#0c1f29; border-top:3px solid #AD8A57; box-shadow:0 26px 60px rgba(0,0,0,.45); padding:26px 32px; display:flex; gap:36px; z-index:60;">
+            <div style="flex:1;">
+              <div style="font-family:'Source Sans 3',sans-serif; font-size:11px; font-weight:700; letter-spacing:2.5px; color:#AD8A57; text-transform:uppercase; margin-bottom:12px;">Traditional</div>
+              <sc-for list="{{ tradItems }}" as="item" hint-placeholder-count="7">
+                <a href="{{ item.href }}" class="ddi" style="display:flex; align-items:center; justify-content:space-between; gap:10px; font-family:'Source Sans 3',sans-serif; font-size:14px; padding:8px 10px; margin:0 -10px; border-radius:6px; text-decoration:none; color:{{ item.color }}; font-weight:{{ item.weight }};" style-hover="background:rgba(173,138,87,.16); color:#fff; transform:translateX(4px);">{{ item.name }}<span class="ddarrow">→</span></a>
+              </sc-for>
+            </div>
+            <div style="width:1px; background:rgba(255,255,255,.12);"></div>
+            <div style="flex:1;">
+              <div style="font-family:'Source Sans 3',sans-serif; font-size:11px; font-weight:700; letter-spacing:2.5px; color:#AD8A57; text-transform:uppercase; margin-bottom:12px;">Digital</div>
+              <sc-for list="{{ digitalItems }}" as="item" hint-placeholder-count="6">
+                <a href="{{ item.href }}" class="ddi" style="display:flex; align-items:center; justify-content:space-between; gap:10px; font-family:'Source Sans 3',sans-serif; font-size:14px; padding:8px 10px; margin:0 -10px; border-radius:6px; text-decoration:none; color:{{ item.color }}; font-weight:{{ item.weight }};" style-hover="background:rgba(173,138,87,.16); color:#fff; transform:translateX(4px);">{{ item.name }}<span class="ddarrow">→</span></a>
+              </sc-for>
+            </div>
+          </div>
+        </sc-if>
+      </div>
+      <a href="our-work.html" class="nl" style="font-family:'Source Sans 3',sans-serif; font-size:13px; font-weight:600; letter-spacing:1.8px; color:#FBF5EA; text-decoration:none;">OUR WORK</a>
+      <a href="{{ contactHref }}" class="nl" style="font-family:'Source Sans 3',sans-serif; font-size:13px; font-weight:600; letter-spacing:1.8px; color:#FBF5EA; text-decoration:none;">CONTACT</a>
+      <a href="{{ phoneHref }}" class="btn-l" style="display:inline-flex; align-items:center; gap:8px; background:#AD8A57; color:#0E242F; font-family:'Source Sans 3',sans-serif; font-weight:700; font-size:13px; letter-spacing:.8px; padding:11px 18px; text-decoration:none; border-radius:24px;">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#0E242F" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+        {{ phone }}
+      </a>
+    </nav>
+        <div class="mtools">
+        <a href="tel:+442045719820" class="mcall" aria-label="Call Rathbone Advertising">
+          <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#0E242F" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+        </a>
+        <button class="mburger" data-mopen="1" aria-label="Open menu">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#AD8A57" stroke-width="2" stroke-linecap="round"><path d="M3 6h18M3 12h18M3 18h18"></path></svg>
+        </button>
+      </div>
+    </header>
+
+  <div class="mpanel">
+    <div style="display:flex; align-items:center; justify-content:space-between; height:58px; margin-bottom:18px;">
+      <a href="index.html" data-mclose="1" style="display:flex; align-items:center; gap:11px; text-decoration:none;">
+        <img src="logo/mono-gold.png" alt="Rathbone Advertising" style="width:40px; height:40px; display:block;">
+        <div style="line-height:1;">
+          <div style="font-family:'Source Sans 3',sans-serif; font-weight:700; font-size:13px; letter-spacing:2.6px; color:#fff;">RATHBONE</div>
+          <div style="font-family:'Source Sans 3',sans-serif; font-size:9px; letter-spacing:4px; color:#AD8A57; margin-top:3px;">ADVERTISING</div>
+        </div>
+      </a>
+      <button data-mclose="1" aria-label="Close menu" style="width:44px; height:44px; background:none; border:1px solid rgba(255,255,255,.25); border-radius:10px; cursor:pointer; display:flex; align-items:center; justify-content:center;">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#FBF5EA" stroke-width="2" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"></path></svg>
+      </button>
+    </div>
+    <div style="display:flex; flex-direction:column; gap:2px; margin-bottom:26px;">
+      <a href="index.html" data-mclose="1" style="font-family:'Playfair Display',serif; font-size:26px; color:#FBF5EA; text-decoration:none; padding:11px 0;">Home</a>
+      <a href="about.html" data-mclose="1" style="font-family:'Playfair Display',serif; font-size:26px; color:#FBF5EA; text-decoration:none; padding:11px 0;">About</a>
+      <a href="our-work.html" data-mclose="1" style="font-family:'Playfair Display',serif; font-size:26px; color:#FBF5EA; text-decoration:none; padding:11px 0;">Our Work</a>
+      <a href="media-solutions.html" data-mclose="1" style="font-family:'Playfair Display',serif; font-size:26px; color:#FBF5EA; text-decoration:none; padding:11px 0;">Media Solutions</a>
+      <a href="contact.html" data-mclose="1" style="font-family:'Playfair Display',serif; font-size:26px; color:#FBF5EA; text-decoration:none; padding:11px 0;">Contact</a>
+    </div>
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:22px; padding-top:22px; border-top:1px solid rgba(255,255,255,.14);">
+      <div>
+        <div style="font-family:'Source Sans 3',sans-serif; font-size:11px; font-weight:700; letter-spacing:2.4px; color:#AD8A57; text-transform:uppercase; margin-bottom:8px;">Traditional</div>
+            <a href="outdoor.html" data-mclose="1" style="display:block; font-family:'Source Sans 3',sans-serif; font-size:15px; color:#dfe6ea; text-decoration:none; padding:9px 0; border-bottom:1px solid rgba(255,255,255,.08);">Outdoor</a>
+            <a href="press.html" data-mclose="1" style="display:block; font-family:'Source Sans 3',sans-serif; font-size:15px; color:#dfe6ea; text-decoration:none; padding:9px 0; border-bottom:1px solid rgba(255,255,255,.08);">Press</a>
+            <a href="radio.html" data-mclose="1" style="display:block; font-family:'Source Sans 3',sans-serif; font-size:15px; color:#dfe6ea; text-decoration:none; padding:9px 0; border-bottom:1px solid rgba(255,255,255,.08);">Radio</a>
+            <a href="cinema.html" data-mclose="1" style="display:block; font-family:'Source Sans 3',sans-serif; font-size:15px; color:#dfe6ea; text-decoration:none; padding:9px 0; border-bottom:1px solid rgba(255,255,255,.08);">Cinema</a>
+            <a href="tv.html" data-mclose="1" style="display:block; font-family:'Source Sans 3',sans-serif; font-size:15px; color:#dfe6ea; text-decoration:none; padding:9px 0; border-bottom:1px solid rgba(255,255,255,.08);">TV</a>
+            <a href="direct-response.html" data-mclose="1" style="display:block; font-family:'Source Sans 3',sans-serif; font-size:15px; color:#dfe6ea; text-decoration:none; padding:9px 0; border-bottom:1px solid rgba(255,255,255,.08);">Direct Response</a>
+            <a href="ambient.html" data-mclose="1" style="display:block; font-family:'Source Sans 3',sans-serif; font-size:15px; color:#dfe6ea; text-decoration:none; padding:9px 0; border-bottom:1px solid rgba(255,255,255,.08);">Ambient</a>
+      </div>
+      <div>
+        <div style="font-family:'Source Sans 3',sans-serif; font-size:11px; font-weight:700; letter-spacing:2.4px; color:#AD8A57; text-transform:uppercase; margin-bottom:8px;">Digital</div>
+            <a href="paid-search.html" data-mclose="1" style="display:block; font-family:'Source Sans 3',sans-serif; font-size:15px; color:#dfe6ea; text-decoration:none; padding:9px 0; border-bottom:1px solid rgba(255,255,255,.08);">Paid Search</a>
+            <a href="paid-social.html" data-mclose="1" style="display:block; font-family:'Source Sans 3',sans-serif; font-size:15px; color:#dfe6ea; text-decoration:none; padding:9px 0; border-bottom:1px solid rgba(255,255,255,.08);">Paid Social</a>
+            <a href="online-video.html" data-mclose="1" style="display:block; font-family:'Source Sans 3',sans-serif; font-size:15px; color:#dfe6ea; text-decoration:none; padding:9px 0; border-bottom:1px solid rgba(255,255,255,.08);">Online Video</a>
+            <a href="display.html" data-mclose="1" style="display:block; font-family:'Source Sans 3',sans-serif; font-size:15px; color:#dfe6ea; text-decoration:none; padding:9px 0; border-bottom:1px solid rgba(255,255,255,.08);">Display</a>
+            <a href="native.html" data-mclose="1" style="display:block; font-family:'Source Sans 3',sans-serif; font-size:15px; color:#dfe6ea; text-decoration:none; padding:9px 0; border-bottom:1px solid rgba(255,255,255,.08);">Native</a>
+            <a href="audio.html" data-mclose="1" style="display:block; font-family:'Source Sans 3',sans-serif; font-size:15px; color:#dfe6ea; text-decoration:none; padding:9px 0; border-bottom:1px solid rgba(255,255,255,.08);">Audio</a>
+      </div>
+    </div>
+    <a href="tel:+442045719820" style="display:flex; align-items:center; justify-content:center; gap:11px; margin-top:30px; background:#AD8A57; color:#0E242F; font-family:'Source Sans 3',sans-serif; font-weight:700; font-size:17px; padding:16px 24px; text-decoration:none; border-radius:30px;">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0E242F" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+      Call 020 4571 9820
+    </a>
+    <div style="text-align:center; font-family:'Roboto',sans-serif; font-size:12.5px; color:rgba(255,255,255,.5); margin-top:14px;">Mon–Fri · 9:00–17:30 · UK-wide</div>
+  </div>
+
+  <!-- hero -->
+  <section class="grain" style="background:#FBF5EA; padding:62px 64px;">
+    <div class="m-col" style="max-width:1280px; margin:0 auto; display:flex; gap:54px; align-items:center;">
+      <div class="herotext" style="flex:1.05;">
+        <div class="hi1" style="display:inline-flex; align-items:center; gap:8px; background:#fff; border:1px solid #e6d8bd; border-radius:24px; padding:7px 16px; font-family:'Source Sans 3',sans-serif; font-size:12px; font-weight:700; letter-spacing:1.5px; color:#0E242F; margin-bottom:22px;"><span style="width:8px; height:8px; border-radius:50%; background:#AD8A57;"></span>MEDIA SOLUTIONS</div>
+        <h1 class="hi2" style="font-family:'Playfair Display',serif; font-weight:600; font-size:52px; line-height:1.07; color:#0E242F; margin:0 0 22px;">Thirteen channels. One plan. No favourites.</h1>
+        <p class="hi3" style="font-size:18px; line-height:1.62; color:#555; margin:0 0 32px; max-width:520px; text-wrap:pretty;">We own no media and take no channel commissions, so the plan you get is the one we'd buy with our own money. Traditional and digital, planned together and bought independently.</p>
+        <div class="hi4" style="display:flex; align-items:center; gap:24px;">
+          <a href="{{ phoneHref }}" class="btn-l" style="display:inline-flex; align-items:center; gap:11px; background:#0E242F; color:#fff; font-family:'Source Sans 3',sans-serif; font-weight:700; font-size:17px; padding:16px 28px; text-decoration:none; border-radius:30px;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#AD8A57" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+            Call {{ phone }}
+          </a>
+          <a href="#traditional" class="nl" style="font-family:'Source Sans 3',sans-serif; font-weight:600; font-size:15px; color:#0E242F; text-decoration:none;">See the channels</a>
+        </div>
+        <div class="hmicro" style="margin-top:26px; font-size:13px; color:#8a8a8a; letter-spacing:.3px;">Media-neutral · Independent · UK-wide</div>
+      </div>
+      <div class="heroimg" style="flex:1; position:relative;">
+        <div class="plate-in" style="position:absolute; inset:-14px -14px auto auto; width:100%; height:100%; border:1px solid #ddd0b4;"></div>
+        <div class="ph" style="position:relative; box-shadow:0 4px 10px rgba(120,94,52,.10), 0 22px 50px rgba(120,94,52,.18);">
+          <img src="assets/team-studio-web.webp" alt="The team planning a multi-channel campaign" class="toned" style="display:block; width:100%; height:430px; object-fit:cover;">
+        </div>
+        <div class="card-in" style="position:absolute; right:26px; bottom:26px; background:#fff; box-shadow:0 14px 36px rgba(120,94,52,.24); padding:16px 20px; max-width:230px;">
+          <div style="font-family:'Source Sans 3',sans-serif; font-weight:700; font-size:15px; color:#0E242F;">One plan, not thirteen</div>
+          <div style="font-size:13px; color:#777; margin-top:4px; line-height:1.45;">Channels chosen to work together, not sold to you separately.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- stat band -->
+  <section style="background:#A48455; padding:36px 64px;">
+    <div class="m-wrap" style="max-width:1280px; margin:0 auto; display:grid; grid-template-columns:repeat(4,1fr);">
+      <div class="stat" style="min-width:0; padding:0 22px; text-align:center;">
+        <div style="font-family:'Playfair Display',serif; font-weight:600; font-size:38px; color:#3a2f1c; line-height:1;">13</div>
+        <div style="font-size:13px; line-height:1.4; color:rgba(58,47,28,.85); margin-top:8px;">channels planned and bought in-house</div>
+      </div>
+      <div class="stat" style="min-width:0; padding:0 22px; text-align:center;">
+        <div style="font-family:'Playfair Display',serif; font-weight:600; font-size:38px; color:#3a2f1c; line-height:1;">0</div>
+        <div style="font-size:13px; line-height:1.4; color:rgba(58,47,28,.85); margin-top:8px;">media we own — so no channel bias</div>
+      </div>
+      <div class="stat" style="min-width:0; padding:0 22px; text-align:center;">
+        <div style="font-family:'Playfair Display',serif; font-weight:600; font-size:38px; color:#3a2f1c; line-height:1;">2–3 wks</div>
+        <div style="font-size:13px; line-height:1.4; color:rgba(58,47,28,.85); margin-top:8px;">typical time from brief to live campaign</div>
+      </div>
+      <div class="stat" style="min-width:0; padding:0 22px; text-align:center;">
+        <div style="font-family:'Playfair Display',serif; font-weight:600; font-size:38px; color:#3a2f1c; line-height:1;">1 team</div>
+        <div style="font-size:13px; line-height:1.4; color:rgba(58,47,28,.85); margin-top:8px;">the people who plan it also run it</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- traditional -->
+  <section id="traditional" style="background:#fff; padding:78px 64px 40px;">
+    <div style="max-width:1280px; margin:0 auto;">
+      <div style="display:flex; align-items:baseline; gap:16px; margin-bottom:10px;">
+        <h2 style="font-family:'Playfair Display',serif; font-weight:600; font-size:34px; color:#0E242F; margin:0;">Traditional</h2>
+        <span style="font-family:'Source Sans 3',sans-serif; font-size:11px; font-weight:700; letter-spacing:2.4px; text-transform:uppercase; color:#AD8A57;">Seven channels</span>
+      </div>
+      <p style="font-size:16.5px; line-height:1.6; color:#777; margin:0 0 34px; max-width:640px;">Trusted, high-attention media that still owns the local day — and where a smaller budget can sound bigger than it is.</p>
+      <div class="cgrid" style="display:grid; grid-template-columns:repeat(4,1fr); gap:20px;">
+          <a href="radio.html" class="ccard" style="display:block; background:#fff; border-radius:14px; overflow:hidden; text-decoration:none; box-shadow:0 2px 6px rgba(120,94,52,.08), 0 16px 36px rgba(120,94,52,.12);">
+          <div class="ph" style="position:relative;">
+          <img src="assets/host-studio-web.webp" alt="A presenter on air in a radio studio" class="toned" style="display:block; width:100%; height:150px; object-fit:cover;">
+          <div style="position:absolute; left:0; top:0; background:#0E242F; color:#AD8A57; font-family:'Source Sans 3',sans-serif; font-weight:700; font-size:10px; letter-spacing:2px; text-transform:uppercase; padding:6px 12px;">Traditional</div>
+          </div>
+          <div style="padding:20px 22px 24px;">
+          <h3 style="font-family:'Playfair Display',serif; font-weight:600; font-size:20px; color:#0E242F; margin:0 0 7px;">Radio</h3>
+          <p style="font-size:13.5px; line-height:1.55; color:#555; margin:0 0 12px;">Local reach with real frequency — the channel that owns the morning routine.</p>
+          <span style="font-family:'Source Sans 3',sans-serif; font-weight:700; font-size:13px; color:#AD8A57;">Explore radio →</span>
+          <span class="u"></span>
+          </div>
+          </a>
+          <a href="outdoor.html" class="ccard" style="display:block; background:#fff; border-radius:14px; overflow:hidden; text-decoration:none; box-shadow:0 2px 6px rgba(120,94,52,.08), 0 16px 36px rgba(120,94,52,.12);">
+          <div class="ph" style="position:relative;">
+          <img src="assets/placement-billboard-biker.webp" alt="A roadside billboard on a high street" class="toned" style="display:block; width:100%; height:150px; object-fit:cover;">
+          <div style="position:absolute; left:0; top:0; background:#0E242F; color:#AD8A57; font-family:'Source Sans 3',sans-serif; font-weight:700; font-size:10px; letter-spacing:2px; text-transform:uppercase; padding:6px 12px;">Traditional</div>
+          </div>
+          <div style="padding:20px 22px 24px;">
+          <h3 style="font-family:'Playfair Display',serif; font-weight:600; font-size:20px; color:#0E242F; margin:0 0 7px;">Outdoor</h3>
+          <p style="font-size:13.5px; line-height:1.55; color:#555; margin:0 0 12px;">48-sheets, 6-sheets and digital roadside — impossible to scroll past.</p>
+          <span style="font-family:'Source Sans 3',sans-serif; font-weight:700; font-size:13px; color:#AD8A57;">Explore outdoor →</span>
+          <span class="u"></span>
+          </div>
+          </a>
+          <a href="press.html" class="ccard" style="display:block; background:#fff; border-radius:14px; overflow:hidden; text-decoration:none; box-shadow:0 2px 6px rgba(120,94,52,.08), 0 16px 36px rgba(120,94,52,.12);">
+          <div class="ph" style="position:relative;">
+          <img src="assets/press-station-web.webp" alt="A commuter reading a newspaper" class="toned" style="display:block; width:100%; height:150px; object-fit:cover;">
+          <div style="position:absolute; left:0; top:0; background:#0E242F; color:#AD8A57; font-family:'Source Sans 3',sans-serif; font-weight:700; font-size:10px; letter-spacing:2px; text-transform:uppercase; padding:6px 12px;">Traditional</div>
+          </div>
+          <div style="padding:20px 22px 24px;">
+          <h3 style="font-family:'Playfair Display',serif; font-weight:600; font-size:20px; color:#0E242F; margin:0 0 7px;">Press</h3>
+          <p style="font-size:13.5px; line-height:1.55; color:#555; margin:0 0 12px;">Regional titles and trade press, where readers still act on what they see.</p>
+          <span style="font-family:'Source Sans 3',sans-serif; font-weight:700; font-size:13px; color:#AD8A57;">Explore press →</span>
+          <span class="u"></span>
+          </div>
+          </a>
+          <a href="cinema.html" class="ccard" style="display:block; background:#fff; border-radius:14px; overflow:hidden; text-decoration:none; box-shadow:0 2px 6px rgba(120,94,52,.08), 0 16px 36px rgba(120,94,52,.12);">
+          <div class="ph" style="position:relative;">
+          <img src="assets/placement-v4-cinema.webp" alt="An advert on a cinema screen" class="toned" style="display:block; width:100%; height:150px; object-fit:cover;">
+          <div style="position:absolute; left:0; top:0; background:#0E242F; color:#AD8A57; font-family:'Source Sans 3',sans-serif; font-weight:700; font-size:10px; letter-spacing:2px; text-transform:uppercase; padding:6px 12px;">Traditional</div>
+          </div>
+          <div style="padding:20px 22px 24px;">
+          <h3 style="font-family:'Playfair Display',serif; font-weight:600; font-size:20px; color:#0E242F; margin:0 0 7px;">Cinema</h3>
+          <p style="font-size:13.5px; line-height:1.55; color:#555; margin:0 0 12px;">The biggest screen you can buy, with an audience that cannot look away.</p>
+          <span style="font-family:'Source Sans 3',sans-serif; font-weight:700; font-size:13px; color:#AD8A57;">Explore cinema →</span>
+          <span class="u"></span>
+          </div>
+          </a>
+          <a href="tv.html" class="ccard" style="display:block; background:#fff; border-radius:14px; overflow:hidden; text-decoration:none; box-shadow:0 2px 6px rgba(120,94,52,.08), 0 16px 36px rgba(120,94,52,.12);">
+          <div class="ph" style="position:relative;">
+          <img src="assets/placement-v4-tv.webp" alt="An advert on a living-room television" class="toned" style="display:block; width:100%; height:150px; object-fit:cover;">
+          <div style="position:absolute; left:0; top:0; background:#0E242F; color:#AD8A57; font-family:'Source Sans 3',sans-serif; font-weight:700; font-size:10px; letter-spacing:2px; text-transform:uppercase; padding:6px 12px;">Traditional</div>
+          </div>
+          <div style="padding:20px 22px 24px;">
+          <h3 style="font-family:'Playfair Display',serif; font-weight:600; font-size:20px; color:#0E242F; margin:0 0 7px;">TV & VOD</h3>
+          <p style="font-size:13.5px; line-height:1.55; color:#555; margin:0 0 12px;">Broadcast credibility at local budgets, plus targeted on-demand.</p>
+          <span style="font-family:'Source Sans 3',sans-serif; font-weight:700; font-size:13px; color:#AD8A57;">Explore TV →</span>
+          <span class="u"></span>
+          </div>
+          </a>
+          <a href="ambient.html" class="ccard" style="display:block; background:#fff; border-radius:14px; overflow:hidden; text-decoration:none; box-shadow:0 2px 6px rgba(120,94,52,.08), 0 16px 36px rgba(120,94,52,.12);">
+          <div class="ph" style="position:relative;">
+          <img src="assets/placement-forecourt.webp" alt="An advert on a petrol pump" class="toned" style="display:block; width:100%; height:150px; object-fit:cover;">
+          <div style="position:absolute; left:0; top:0; background:#0E242F; color:#AD8A57; font-family:'Source Sans 3',sans-serif; font-weight:700; font-size:10px; letter-spacing:2px; text-transform:uppercase; padding:6px 12px;">Traditional</div>
+          </div>
+          <div style="padding:20px 22px 24px;">
+          <h3 style="font-family:'Playfair Display',serif; font-weight:600; font-size:20px; color:#0E242F; margin:0 0 7px;">Ambient</h3>
+          <p style="font-size:13.5px; line-height:1.55; color:#555; margin:0 0 12px;">Forecourts, washrooms, cups and floors — the reminder layer at close range.</p>
+          <span style="font-family:'Source Sans 3',sans-serif; font-weight:700; font-size:13px; color:#AD8A57;">Explore ambient →</span>
+          <span class="u"></span>
+          </div>
+          </a>
+          <a href="direct-response.html" class="ccard" style="display:block; background:#fff; border-radius:14px; overflow:hidden; text-decoration:none; box-shadow:0 2px 6px rgba(120,94,52,.08), 0 16px 36px rgba(120,94,52,.12);">
+          <div class="ph" style="position:relative;">
+          <img src="assets/press-brochure-web.webp" alt="A mailer being read at home" class="toned" style="display:block; width:100%; height:150px; object-fit:cover;">
+          <div style="position:absolute; left:0; top:0; background:#0E242F; color:#AD8A57; font-family:'Source Sans 3',sans-serif; font-weight:700; font-size:10px; letter-spacing:2px; text-transform:uppercase; padding:6px 12px;">Traditional</div>
+          </div>
+          <div style="padding:20px 22px 24px;">
+          <h3 style="font-family:'Playfair Display',serif; font-weight:600; font-size:20px; color:#0E242F; margin:0 0 7px;">Direct Response</h3>
+          <p style="font-size:13.5px; line-height:1.55; color:#555; margin:0 0 12px;">Door drops and addressed mail that land in the hand and get kept.</p>
+          <span style="font-family:'Source Sans 3',sans-serif; font-weight:700; font-size:13px; color:#AD8A57;">Explore direct →</span>
+          <span class="u"></span>
+          </div>
+          </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- digital -->
+  <section id="digital" class="grain" style="background:#FBF5EA; padding:60px 64px 78px;">
+    <div style="max-width:1280px; margin:0 auto;">
+      <div style="display:flex; align-items:baseline; gap:16px; margin-bottom:10px;">
+        <h2 style="font-family:'Playfair Display',serif; font-weight:600; font-size:34px; color:#0E242F; margin:0;">Digital</h2>
+        <span style="font-family:'Source Sans 3',sans-serif; font-size:11px; font-weight:700; letter-spacing:2.4px; text-transform:uppercase; color:#AD8A57;">Six channels</span>
+      </div>
+      <p style="font-size:16.5px; line-height:1.6; color:#777; margin:0 0 34px; max-width:640px;">Precision, measurement and speed — set up in your name, with the reporting written in plain English.</p>
+      <div class="cgrid" style="display:grid; grid-template-columns:repeat(4,1fr); gap:20px;">
+          <a href="paid-search.html" class="ccard" style="display:block; background:#fff; border-radius:14px; overflow:hidden; text-decoration:none; box-shadow:0 2px 6px rgba(120,94,52,.08), 0 16px 36px rgba(120,94,52,.12);">
+          <div class="ph" style="position:relative;">
+          <img src="assets/search-laptop-web.webp" alt="Searching on a laptop at home" class="toned" style="display:block; width:100%; height:150px; object-fit:cover;">
+          <div style="position:absolute; left:0; top:0; background:#0E242F; color:#AD8A57; font-family:'Source Sans 3',sans-serif; font-weight:700; font-size:10px; letter-spacing:2px; text-transform:uppercase; padding:6px 12px;">Digital</div>
+          </div>
+          <div style="padding:20px 22px 24px;">
+          <h3 style="font-family:'Playfair Display',serif; font-weight:600; font-size:20px; color:#0E242F; margin:0 0 7px;">Paid Search</h3>
+          <p style="font-size:13.5px; line-height:1.55; color:#555; margin:0 0 12px;">Be there the moment they start looking — measured to the pound.</p>
+          <span style="font-family:'Source Sans 3',sans-serif; font-weight:700; font-size:13px; color:#AD8A57;">Explore search →</span>
+          <span class="u"></span>
+          </div>
+          </a>
+          <a href="paid-social.html" class="ccard" style="display:block; background:#fff; border-radius:14px; overflow:hidden; text-decoration:none; box-shadow:0 2px 6px rgba(120,94,52,.08), 0 16px 36px rgba(120,94,52,.12);">
+          <div class="ph" style="position:relative;">
+          <img src="assets/social-sofa-web.webp" alt="Scrolling a social feed at home" class="toned" style="display:block; width:100%; height:150px; object-fit:cover;">
+          <div style="position:absolute; left:0; top:0; background:#0E242F; color:#AD8A57; font-family:'Source Sans 3',sans-serif; font-weight:700; font-size:10px; letter-spacing:2px; text-transform:uppercase; padding:6px 12px;">Digital</div>
+          </div>
+          <div style="padding:20px 22px 24px;">
+          <h3 style="font-family:'Playfair Display',serif; font-weight:600; font-size:20px; color:#0E242F; margin:0 0 7px;">Paid Social</h3>
+          <p style="font-size:13.5px; line-height:1.55; color:#555; margin:0 0 12px;">Meet them where they already spend the evening, by postcode.</p>
+          <span style="font-family:'Source Sans 3',sans-serif; font-weight:700; font-size:13px; color:#AD8A57;">Explore social →</span>
+          <span class="u"></span>
+          </div>
+          </a>
+          <a href="online-video.html" class="ccard" style="display:block; background:#fff; border-radius:14px; overflow:hidden; text-decoration:none; box-shadow:0 2px 6px rgba(120,94,52,.08), 0 16px 36px rgba(120,94,52,.12);">
+          <div class="ph" style="position:relative;">
+          <img src="assets/video-train-web.webp" alt="Watching video on a phone" class="toned" style="display:block; width:100%; height:150px; object-fit:cover;">
+          <div style="position:absolute; left:0; top:0; background:#0E242F; color:#AD8A57; font-family:'Source Sans 3',sans-serif; font-weight:700; font-size:10px; letter-spacing:2px; text-transform:uppercase; padding:6px 12px;">Digital</div>
+          </div>
+          <div style="padding:20px 22px 24px;">
+          <h3 style="font-family:'Playfair Display',serif; font-weight:600; font-size:20px; color:#0E242F; margin:0 0 7px;">Online Video</h3>
+          <p style="font-size:13.5px; line-height:1.55; color:#555; margin:0 0 12px;">YouTube and connected TV — you only pay for people who watch.</p>
+          <span style="font-family:'Source Sans 3',sans-serif; font-weight:700; font-size:13px; color:#AD8A57;">Explore video →</span>
+          <span class="u"></span>
+          </div>
+          </a>
+          <a href="display.html" class="ccard" style="display:block; background:#fff; border-radius:14px; overflow:hidden; text-decoration:none; box-shadow:0 2px 6px rgba(120,94,52,.08), 0 16px 36px rgba(120,94,52,.12);">
+          <div class="ph" style="position:relative;">
+          <img src="assets/display-tablet-web.webp" alt="A news site on a tablet with ad space" class="toned" style="display:block; width:100%; height:150px; object-fit:cover;">
+          <div style="position:absolute; left:0; top:0; background:#0E242F; color:#AD8A57; font-family:'Source Sans 3',sans-serif; font-weight:700; font-size:10px; letter-spacing:2px; text-transform:uppercase; padding:6px 12px;">Digital</div>
+          </div>
+          <div style="padding:20px 22px 24px;">
+          <h3 style="font-family:'Playfair Display',serif; font-weight:600; font-size:20px; color:#0E242F; margin:0 0 7px;">Display</h3>
+          <p style="font-size:13.5px; line-height:1.55; color:#555; margin:0 0 12px;">Stay visible through a long decision, on sites worth appearing on.</p>
+          <span style="font-family:'Source Sans 3',sans-serif; font-weight:700; font-size:13px; color:#AD8A57;">Explore display →</span>
+          <span class="u"></span>
+          </div>
+          </a>
+          <a href="native.html" class="ccard" style="display:block; background:#fff; border-radius:14px; overflow:hidden; text-decoration:none; box-shadow:0 2px 6px rgba(120,94,52,.08), 0 16px 36px rgba(120,94,52,.12);">
+          <div class="ph" style="position:relative;">
+          <img src="assets/digital-tablet-web.webp" alt="Reading a sponsored feature on a tablet" class="toned" style="display:block; width:100%; height:150px; object-fit:cover;">
+          <div style="position:absolute; left:0; top:0; background:#0E242F; color:#AD8A57; font-family:'Source Sans 3',sans-serif; font-weight:700; font-size:10px; letter-spacing:2px; text-transform:uppercase; padding:6px 12px;">Digital</div>
+          </div>
+          <div style="padding:20px 22px 24px;">
+          <h3 style="font-family:'Playfair Display',serif; font-weight:600; font-size:20px; color:#0E242F; margin:0 0 7px;">Native</h3>
+          <p style="font-size:13.5px; line-height:1.55; color:#555; margin:0 0 12px;">Ads that read like the page they sit in — for people who skip banners.</p>
+          <span style="font-family:'Source Sans 3',sans-serif; font-weight:700; font-size:13px; color:#AD8A57;">Explore native →</span>
+          <span class="u"></span>
+          </div>
+          </a>
+          <a href="audio.html" class="ccard" style="display:block; background:#fff; border-radius:14px; overflow:hidden; text-decoration:none; box-shadow:0 2px 6px rgba(120,94,52,.08), 0 16px 36px rgba(120,94,52,.12);">
+          <div class="ph" style="position:relative;">
+          <img src="assets/digital-audio-web.webp" alt="Listening to audio on headphones" class="toned" style="display:block; width:100%; height:150px; object-fit:cover;">
+          <div style="position:absolute; left:0; top:0; background:#0E242F; color:#AD8A57; font-family:'Source Sans 3',sans-serif; font-weight:700; font-size:10px; letter-spacing:2px; text-transform:uppercase; padding:6px 12px;">Digital</div>
+          </div>
+          <div style="padding:20px 22px 24px;">
+          <h3 style="font-family:'Playfair Display',serif; font-weight:600; font-size:20px; color:#0E242F; margin:0 0 7px;">Audio</h3>
+          <p style="font-size:13.5px; line-height:1.55; color:#555; margin:0 0 12px;">Podcasts, streaming and smart speakers — headphones on, guard down.</p>
+          <span style="font-family:'Source Sans 3',sans-serif; font-weight:700; font-size:13px; color:#AD8A57;">Explore audio →</span>
+          <span class="u"></span>
+          </div>
+          </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- how we plan -->
+  <section style="background:#0E242F; padding:74px 64px; color:#fff;">
+    <div style="max-width:1280px; margin:0 auto;">
+      <div style="text-align:center; margin-bottom:46px;">
+        <div style="font-family:'Source Sans 3',sans-serif; font-size:13px; font-weight:700; letter-spacing:3px; text-transform:uppercase; color:#AD8A57; margin-bottom:14px;">How we plan across channels</div>
+        <h2 style="font-family:'Playfair Display',serif; font-weight:600; font-size:34px; color:#fff; margin:0;">The channels work harder together</h2>
+      </div>
+      <div class="jwrap">
+      <div class="jline"><span class="jtip"></span></div>
+      <div class="steps" style="display:flex; gap:30px;">
+        <div style="flex:1; text-align:center;">
+          <div class="stepc" style="width:64px; height:64px; border-radius:50%; background:#AD8A57; color:#0E242F; font-family:'Source Sans 3',sans-serif; font-weight:700; font-size:22px; display:flex; align-items:center; justify-content:center; margin:0 auto 20px;">01</div>
+          <h3 style="font-family:'Source Sans 3',sans-serif; font-weight:700; font-size:18px; color:#fff; margin:0 0 8px;">Reach</h3>
+          <p style="font-size:14px; line-height:1.6; color:rgba(255,255,255,.72); margin:0;">Radio, outdoor or TV to put the name in front of the whole town, not just people already looking.</p>
+        </div>
+        <div style="flex:1; text-align:center;">
+          <div class="stepc" style="width:64px; height:64px; border-radius:50%; background:#AD8A57; color:#0E242F; font-family:'Source Sans 3',sans-serif; font-weight:700; font-size:22px; display:flex; align-items:center; justify-content:center; margin:0 auto 20px;">02</div>
+          <h3 style="font-family:'Source Sans 3',sans-serif; font-weight:700; font-size:18px; color:#fff; margin:0 0 8px;">Remind</h3>
+          <p style="font-size:14px; line-height:1.6; color:rgba(255,255,255,.72); margin:0;">Social, display and ambient keep you in view through a decision that takes weeks, not minutes.</p>
+        </div>
+        <div style="flex:1; text-align:center;">
+          <div class="stepc" style="width:64px; height:64px; border-radius:50%; background:#AD8A57; color:#0E242F; font-family:'Source Sans 3',sans-serif; font-weight:700; font-size:22px; display:flex; align-items:center; justify-content:center; margin:0 auto 20px;">03</div>
+          <h3 style="font-family:'Source Sans 3',sans-serif; font-weight:700; font-size:18px; color:#fff; margin:0 0 8px;">Capture</h3>
+          <p style="font-size:14px; line-height:1.6; color:rgba(255,255,255,.72); margin:0;">Search and direct response catch the demand the other channels created, and prove it happened.</p>
+        </div>
+        <div style="flex:1; text-align:center;">
+          <div class="stepc" style="width:64px; height:64px; border-radius:50%; background:#AD8A57; color:#0E242F; font-family:'Source Sans 3',sans-serif; font-weight:700; font-size:22px; display:flex; align-items:center; justify-content:center; margin:0 auto 20px;">04</div>
+          <h3 style="font-family:'Source Sans 3',sans-serif; font-weight:700; font-size:18px; color:#fff; margin:0 0 8px;">Review</h3>
+          <p style="font-size:14px; line-height:1.6; color:rgba(255,255,255,.72); margin:0;">We move budget to what's working mid-campaign rather than defending the original plan.</p>
+        </div>
+      </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- not sure -->
+  <section style="background:#fff; padding:74px 64px;">
+    <div class="m-col" style="max-width:1280px; margin:0 auto; display:flex; gap:54px; align-items:center;">
+      <div style="flex:1;">
+        <h2 style="font-family:'Playfair Display',serif; font-weight:600; font-size:34px; line-height:1.15; color:#0E242F; margin:0 0 18px;">Not sure which channels you need?</h2>
+        <p style="font-size:16.5px; line-height:1.68; color:#555; margin:0 0 18px; text-wrap:pretty;">Most clients don't when they call — that's the job. Tell us the business, the budget and what a good month looks like, and we'll come back with a plan and the reasoning behind it.</p>
+        <p style="font-size:16.5px; line-height:1.68; color:#555; margin:0 0 26px; text-wrap:pretty;">If a channel isn't right for you, we'll say so before you spend anything on it.</p>
+        <a href="{{ phoneHref }}" class="btn-l" style="display:inline-flex; align-items:center; gap:11px; background:#0E242F; color:#fff; font-family:'Source Sans 3',sans-serif; font-weight:700; font-size:17px; padding:16px 28px; text-decoration:none; border-radius:30px;">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#AD8A57" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+          Call {{ phone }}
+        </a>
+      </div>
+      <div style="flex:1;">
+        <div class="ph" style="box-shadow:0 4px 10px rgba(120,94,52,.10), 0 22px 50px rgba(120,94,52,.18);">
+          <img src="assets/team-office-web.webp" alt="The team at work on a media plan" class="toned" style="display:block; width:100%; height:400px; object-fit:cover;">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer style="background:#0a1b24; padding:52px 64px 0;">
+    <div style="max-width:1280px; margin:0 auto;">
+      <div class="m-col-f" style="display:flex; gap:54px;">
+        <div style="width:280px;">
+          <div style="display:flex; align-items:center; gap:11px; margin-bottom:16px;">
+            <div style="width:42px; height:42px; flex:none; border-radius:50%; background:#AD8A57; display:flex; align-items:center; justify-content:center;"><img src="logo/mono-navy.png" alt="Rathbone Advertising" style="width:35px; height:35px; display:block;"></div>
+            <div style="line-height:1;"><div style="font-family:'Source Sans 3',sans-serif; font-weight:700; font-size:14px; letter-spacing:2.5px; color:#fff;">RATHBONE</div><div style="font-family:'Source Sans 3',sans-serif; font-size:9px; letter-spacing:4px; color:#AD8A57; margin-top:3px;">ADVERTISING</div></div>
+          </div>
+          <p style="font-family:'Roboto',sans-serif; font-size:13px; line-height:1.65; color:rgba(255,255,255,.6); margin:0;">Independent media specialists. Old-school values, brought to the modern media model.</p>
+        </div>
+        <div style="flex:1;">
+          <div style="font-family:'Source Sans 3',sans-serif; font-weight:700; font-size:12px; letter-spacing:2px; text-transform:uppercase; color:#AD8A57; margin-bottom:16px;">Quick Links</div>
+          <div style="display:flex; flex-direction:column; gap:9px;">
+            <a href="index.html" class="fl" style="font-family:'Roboto',sans-serif; font-size:14px; color:rgba(255,255,255,.78); text-decoration:none;">Home</a>
+            <a href="about.html" class="fl" style="font-family:'Roboto',sans-serif; font-size:14px; color:rgba(255,255,255,.78); text-decoration:none;">About Us</a>
+            <a href="media-solutions.html" class="fl" style="font-family:'Roboto',sans-serif; font-size:14px; color:rgba(255,255,255,.78); text-decoration:none;">Media Solutions</a>
+            <a href="our-work.html" class="fl" style="font-family:'Roboto',sans-serif; font-size:14px; color:rgba(255,255,255,.78); text-decoration:none;">Our Work</a>
+            <span style="font-family:'Roboto',sans-serif; font-size:14px; color:rgba(255,255,255,.45);">Privacy Policy (coming soon)</span>
+          </div>
+        </div>
+        <div style="flex:1;">
+          <div style="font-family:'Source Sans 3',sans-serif; font-weight:700; font-size:12px; letter-spacing:2px; text-transform:uppercase; color:#AD8A57; margin-bottom:16px;">Contact Us</div>
+          <a href="{{ phoneHref }}" style="display:block; font-family:'Roboto',sans-serif; font-size:14px; color:#fff; text-decoration:none; margin-bottom:9px;">{{ phone }}</a>
+          <a href="mailto:hello@rathboneadvertising.com" style="display:block; font-family:'Roboto',sans-serif; font-size:14px; color:rgba(255,255,255,.78); text-decoration:none; margin-bottom:9px;">{{ email }}</a>
+          <div style="font-family:'Roboto',sans-serif; font-size:13px; color:rgba(255,255,255,.55);">Mon–Fri · 9:00–17:30</div>
+        </div>
+        <div style="flex:1;">
+          <div style="font-family:'Source Sans 3',sans-serif; font-weight:700; font-size:12px; letter-spacing:2px; text-transform:uppercase; color:#AD8A57; margin-bottom:16px;">Accredited</div>
+          <div style="display:flex; flex-direction:column; gap:10px;">
+            <div style="border:1px solid rgba(255,255,255,.22); padding:9px 12px; font-family:'Source Sans 3',sans-serif; font-size:12px; color:rgba(255,255,255,.85); letter-spacing:.5px;">Google Partner</div>
+            <div style="border:1px solid rgba(255,255,255,.22); padding:9px 12px; font-family:'Source Sans 3',sans-serif; font-size:12px; color:rgba(255,255,255,.85); letter-spacing:.5px;">Microsoft Advertising Partner ’24</div>
+          </div>
+        </div>
+      </div>
+      <div style="border-top:1px solid rgba(255,255,255,.12); margin-top:42px; padding:22px 0; display:flex; justify-content:space-between; align-items:center;">
+        <div style="font-family:'Roboto',sans-serif; font-size:12px; color:rgba(255,255,255,.5);">© 2026 Rathbone Advertising. All rights reserved.</div>
+        <div style="font-family:'Source Sans 3',sans-serif; font-size:11px; letter-spacing:2px; text-transform:uppercase; color:rgba(173,138,87,.7);">Independent Media Specialists</div>
+      </div>
+    </div>
+  </footer>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1280,&quot;height&quot;:900}}">
+class Component extends DCLogic {
+  state = { navOpen: false };
+
+  trad = ["Outdoor", "Print", "Radio", "Cinema", "TV", "Direct Response", "Ambient"];
+  digital = ["Search", "Display", "Video", "Social Media", "Native", "Audio"];
+
+  phone = "020 4571 9820";
+  phoneHref = "tel:+442045719820";
+  email = "hello@rathboneadvertising.com";
+  contactHref = "contact.html";
+
+  navHrefs = {"Radio":"radio.html","Cinema":"cinema.html","TV":"tv.html","Outdoor":"outdoor.html","Print":"press.html","Search":"paid-search.html","Display":"display.html","Social Media":"paid-social.html","Video":"online-video.html","Direct Response":"direct-response.html","Ambient":"ambient.html","Audio":"audio.html","Native":"native.html"};
+  navItems(list, active) { return list.map(n => ({ name: n, href: this.navHrefs[n] || "#", color: n === active ? "#AD8A57" : "#dfe6ea", weight: n === active ? "700" : "400" })); }
+
+  
+  renderVals() {
+    return {
+      tradItems: this.navItems(this.trad), digitalItems: this.navItems(this.digital),
+      phone: this.phone, phoneHref: this.phoneHref, email: this.email, contactHref: this.contactHref,
+      navOpen: this.state.navOpen,
+      openNav: () => this.setState({ navOpen: true }),
+      closeNav: () => this.setState({ navOpen: false })
+    };
+  }
+}
+</script>
+</body>
+</html>
