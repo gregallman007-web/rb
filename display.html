@@ -172,6 +172,25 @@ html.jgo .jtip{left:100%; opacity:1;}
   .m-col > .ph:first-child{display:block !important;}
   .m-col > .ph:nth-child(2){display:none !important;}
 }
+
+/* --- mobile: hero frame + vertical beam layering --- */
+@media (max-width:960px){
+  /* frame measures the photo wrapper, not the grown .heroimg, so it can't cross the caption */
+  .plate-in{inset:auto !important; top:-12px !important; left:-12px !important; width:calc(100% + 24px) !important; height:auto !important; bottom:auto !important; aspect-ratio:auto !important;}
+  .heroimg{position:relative;}
+  .heroimg > div:not(.plate-in):not(.card-in){outline:1px solid #ddd0b4; outline-offset:10px;}
+  .plate-in{display:none !important;}
+}
+@media (max-width:620px){
+  .jline{z-index:0 !important;}
+  .jtip{z-index:0 !important;}
+  .steps > div:not(.jline):not(.jtip){z-index:2 !important;}
+  /* mask the beam behind step copy using the section's own colour */
+  .steps > div:not(.jline):not(.jtip) h3,
+  .steps > div:not(.jline):not(.jtip) p{position:relative;}
+  .steps > div:not(.jline):not(.jtip) h3::before{content:""; position:absolute; inset:-14px -8px -14px; background:#0E242F; z-index:-1;}
+  .steps > div:not(.jline):not(.jtip) p::before{content:""; position:absolute; inset:-14px -8px -8px; background:#0E242F; z-index:-1;}
+}
 </style>
 <script>
 (function(){

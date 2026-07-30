@@ -169,6 +169,36 @@ html.jgo .jtip{left:100%; opacity:1;}
   .filmintro p{font-size:13px !important; margin-bottom:12px !important;}
   .filmchip{top:calc(min(46vh, 100dvh - 205px) - 52px) !important;}
 }
+
+/* --- mobile: hero frame + vertical beam layering --- */
+@media (max-width:960px){
+  /* frame measures the photo wrapper, not the grown .heroimg, so it can't cross the caption */
+  .plate-in{inset:auto !important; top:-12px !important; left:-12px !important; width:calc(100% + 24px) !important; height:auto !important; bottom:auto !important; aspect-ratio:auto !important;}
+  .heroimg{position:relative;}
+  .heroimg > div:not(.plate-in):not(.card-in){outline:1px solid #ddd0b4; outline-offset:10px;}
+  .plate-in{display:none !important;}
+}
+@media (max-width:620px){
+  .jline{z-index:0 !important;}
+  .jtip{z-index:0 !important;}
+  .steps > div:not(.jline):not(.jtip){z-index:2 !important;}
+  /* mask the beam behind step copy using the section's own colour */
+  .steps > div:not(.jline):not(.jtip) h3,
+  .steps > div:not(.jline):not(.jtip) p{position:relative;}
+  .steps > div:not(.jline):not(.jtip) h3::before{content:""; position:absolute; inset:-14px -8px -14px; background:#0E242F; z-index:-1;}
+  .steps > div:not(.jline):not(.jtip) p::before{content:""; position:absolute; inset:-14px -8px -8px; background:#0E242F; z-index:-1;}
+}
+
+/* mobile scene caption occupies the navy band under the film */
+@media (max-width:960px){
+  .filmcap{display:block !important; position:absolute; left:0; right:0; z-index:22; pointer-events:none;
+    top:calc(min(58vh, 100dvh - 270px) + 26px); padding:0 26px; text-align:center; opacity:0; transition:opacity .45s ease;}
+}
+@media (max-width:960px) and (max-height:620px){
+  .filmcap{top:calc(min(46vh, 100dvh - 205px) + 16px); padding:0 22px;}
+  .filmcap .captitle{font-size:21px !important;}
+  .filmcap .capdesc{font-size:13px !important; margin-bottom:12px !important;}
+}
 </style>
 <script>
 (function(){
@@ -398,6 +428,21 @@ html.jgo .jtip{left:100%; opacity:1;}
             </a>
             <a href="media-solutions.html" class="btn-l" style="display:inline-flex; align-items:center; background:transparent; color:#FBF5EA; border:1.5px solid rgba(251,245,234,.5); font-family:'Source Sans 3',sans-serif; font-weight:700; font-size:17px; padding:16px 30px; text-decoration:none; border-radius:30px;">Explore media solutions</a>
           </div>
+        </div>
+      </div>
+
+      <!-- mobile scene caption: fills the navy band once the intro clears -->
+      <div ref="{{ capRef }}" class="filmcap" style="display:none;">
+        <div class="capnum" style="font-family:'Source Sans 3',sans-serif; font-size:11px; font-weight:700; letter-spacing:3px; color:rgba(173,138,87,.75); margin-bottom:10px;">01 / 06</div>
+        <div class="captitle" style="font-family:'Playfair Display',serif; font-weight:600; font-size:26px; line-height:1.15; color:#FBF5EA; margin-bottom:10px;">The signal goes out</div>
+        <p class="capdesc" style="font-size:14.5px; line-height:1.6; color:rgba(251,245,234,.72); margin:0 0 18px;">Before the town is awake, the transmitter is already working.</p>
+        <div class="caprail" style="display:flex; gap:6px; justify-content:center;">
+          <span style="width:26px; height:2px; background:#AD8A57;"></span>
+          <span style="width:26px; height:2px; background:rgba(251,245,234,.2);"></span>
+          <span style="width:26px; height:2px; background:rgba(251,245,234,.2);"></span>
+          <span style="width:26px; height:2px; background:rgba(251,245,234,.2);"></span>
+          <span style="width:26px; height:2px; background:rgba(251,245,234,.2);"></span>
+          <span style="width:26px; height:2px; background:rgba(251,245,234,.2);"></span>
         </div>
       </div>
 
@@ -836,6 +881,15 @@ class Component extends DCLogic {
   chip4Ref = (el) => { this.chip4 = el; };
   finaleRef = (el) => { this.finale = el; };
   progressRef = (el) => { this.progress = el; };
+  capRef = (el) => { this.cap = el; };
+  capData = [
+    { n: "01 / 06", t: "The signal goes out", d: "Before the town is awake, the transmitter is already working." },
+    { n: "02 / 06", t: "The morning drive", d: "Radio reaches your customer in the one place they can't skip the ad." },
+    { n: "03 / 06", t: "The high street", d: "A 48-sheet they pass twice a day, every day, without fail." },
+    { n: "04 / 06", t: "The bus stop", d: "Six feet of poster at eye level, with nothing else to look at." },
+    { n: "05 / 06", t: "Prime time at home", d: "The day ends where it began — with your name in the room." },
+    { n: "06 / 06", t: "One signal, every touchpoint", d: "Planned together, bought independently, measured honestly." }
+  ];
 
   componentDidMount() {
     this.reduced = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -914,6 +968,23 @@ class Component extends DCLogic {
     const fo = p < 0.86 ? 0 : Math.min(1, (p - 0.86) / 0.09);
     if (this.finale) { this.finale.style.opacity = String(fo); this.finale.style.pointerEvents = fo > 0.6 ? "auto" : "none"; }
     if (this.progress) this.progress.style.width = (p * 100).toFixed(2) + "%";
+    // mobile caption: appears once the intro has cleared, tracks the current scene
+    if (this.cap) {
+      let si = 0;
+      for (let i = 0; i < this.windows.length; i++) if (p >= this.windows[i][0]) si = i;
+      const show = io < 0.05 && fo < 0.35;
+      this.cap.style.opacity = show ? "1" : "0";
+      if (si !== this._capIdx) {
+        this._capIdx = si;
+        const d = this.capData[si];
+        const q = (s) => this.cap.querySelector(s);
+        if (q(".capnum")) q(".capnum").textContent = d.n;
+        if (q(".captitle")) q(".captitle").textContent = d.t;
+        if (q(".capdesc")) q(".capdesc").textContent = d.d;
+        const bars = this.cap.querySelectorAll(".caprail span");
+        bars.forEach((b, i) => { b.style.background = i === si ? "#AD8A57" : "rgba(251,245,234,.2)"; });
+      }
+    }
   };
 
   renderVals() {
@@ -926,7 +997,7 @@ class Component extends DCLogic {
       filmContainerRef: this.filmContainerRef,
       v1Ref: this.v1Ref, vCarRef: this.vCarRef, v2Ref: this.v2Ref, v3Ref: this.v3Ref, v4Ref: this.v4Ref, v5Ref: this.v5Ref,
       chipCarRef: (el) => { this.chipCar = el; },
-      introRef: this.introRef, finaleRef: this.finaleRef, progressRef: this.progressRef,
+      introRef: this.introRef, finaleRef: this.finaleRef, progressRef: this.progressRef, capRef: this.capRef,
       chip1Ref: this.chip1Ref, chip2Ref: this.chip2Ref, chip3Ref: this.chip3Ref, chip4Ref: this.chip4Ref
     };
   }
