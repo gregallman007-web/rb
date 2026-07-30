@@ -801,12 +801,19 @@ class Component extends DCLogic {
     // file server lacks Range support -> load each clip into a blob URL so scrubbing can seek
     const srcs = ["assets/scene1-mast.mp4", "assets/scene-car.mp4", "assets/scene2-billboard.mp4", "assets/scene3-bus.mp4", "assets/scene4-tv.mp4", "assets/scene5-finale.mp4"];
     srcs.forEach((s, i) => {
+      const vEl = this.vids[i];
+      if (vEl) {
+        const mark = () => { this.ready[i] = true; };
+        if (vEl.readyState >= 2) mark(); else vEl.addEventListener("loadeddata", mark, { once: true });
+      }
       fetch(s).then(r => r.blob()).then(b => {
         const v = this.vids[i];
         if (!v) return;
         const u = URL.createObjectURL(b);
         this._blobUrls.push(u);
+        const at = v.currentTime;
         v.src = u; v.load(); v.pause();
+        v.addEventListener("loadeddata", () => { try { v.currentTime = at; } catch (e) {} }, { once: true });
         this.ready[i] = true;
       }).catch(() => {});
     });
