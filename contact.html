@@ -132,7 +132,9 @@ html.mopen body{overflow:hidden;}
   /* channel card grids stack properly */
   .cgrid{grid-template-columns:repeat(2,1fr) !important;}
   /* hero caption card sits under the image instead of covering it */
-  .card-in{position:static !important; right:auto !important; bottom:auto !important; max-width:none !important; margin-top:12px; padding:14px 16px !important; box-shadow:0 3px 10px rgba(120,94,52,.14) !important;}
+  .card-in{position:static !important; right:auto !important; bottom:auto !important; max-width:none !important; margin-top:22px; padding:14px 16px !important; box-shadow:none !important; border:1px solid #e6d8bd;}
+  /* the photo's drop shadow was landing on the card below it */
+  .heroimg > div:not(.plate-in):not(.card-in){box-shadow:none !important;}
   /* photo strip: show a different shot to the hero */
   .m-col > .ph:first-child{display:none !important;}
   .m-col > .ph:nth-child(2){display:block !important;}
