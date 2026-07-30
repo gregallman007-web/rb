@@ -108,14 +108,20 @@ html.mopen .mpanel{transform:none; visibility:visible;}
 html.mopen{overflow:hidden;}
 html.mopen body{overflow:hidden;}
 @media (max-width:960px){
-  .filmstage{height:62vh !important;}
-  .filmintro{top:78px !important;}
+  .filmstage{height:100vh !important; height:100dvh !important;}
   .filmwrap{height:400vh !important;}
-  .filmstage video{object-fit:cover; object-position:center;}
+  /* film keeps its original crop as a band at the top; the copy sits in the navy beneath it */
+  .filmstage video{height:min(58vh, calc(100dvh - 270px)) !important; object-fit:cover !important; object-position:center !important;}
+  .filmintro{top:min(58vh, calc(100dvh - 270px)) !important; bottom:0 !important; align-items:center !important; padding:22px 22px 0 !important;}
+  .filmintro h1{font-size:30px !important; margin-bottom:12px !important;}
+  .filmintro > div{max-width:none !important;}
+  .filmchip{top:calc(min(58vh, 100dvh - 270px) - 62px) !important; bottom:auto !important; left:22px !important; right:22px !important;}
+  .filmchip > div{padding:11px 16px !important;}
+  .filmchip span:first-child{font-size:19px !important;}
+  .filmchip span:last-child{font-size:11px !important; letter-spacing:1.8px !important;}
 }
 @media (max-width:620px){
-  .filmstage{height:56vh !important;}
-  .filmwrap{height:360vh !important;}
+  .filmwrap{height:340vh !important;}
 }
 .steps{position:relative;}
 .steps > div:not(.jline){position:relative; z-index:1;}
@@ -136,6 +142,33 @@ html.jgo .jtip{left:100%; opacity:1;}
 .ddpanel::before{content:""; position:absolute; top:-18px; left:-24px; right:-24px; height:22px;}
 .ddpanel::after{content:""; position:absolute; left:0; right:0; bottom:-16px; height:16px;}
 @media (max-width:1180px){.ddpanel{left:auto !important; right:0 !important; margin-left:0;}}
+
+/* --- mobile refinements --- */
+@media (max-width:960px){
+  /* channel card grids stack properly */
+  .cgrid{grid-template-columns:repeat(2,1fr) !important;}
+  /* hero caption card sits under the image instead of covering it */
+  .card-in{position:static !important; right:auto !important; bottom:auto !important; max-width:none !important; margin-top:12px; padding:14px 16px !important; box-shadow:0 3px 10px rgba(120,94,52,.14) !important;}
+  /* photo strip: show a different shot to the hero */
+  .m-col > .ph:first-child{display:none !important;}
+  .m-col > .ph:nth-child(2){display:block !important;}
+}
+@media (max-width:620px){
+  .cgrid{grid-template-columns:1fr !important;}
+  /* journey beam runs vertically down the stacked steps */
+  .jline{display:block !important; top:31px !important; bottom:120px !important; left:calc(50% - 1px) !important; right:auto !important; width:2px !important; height:auto !important;}
+  .jline::after{width:2px !important; height:0; bottom:auto !important; background:linear-gradient(180deg, rgba(173,138,87,.5), #AD8A57 60%, #e8cd9a) !important; transition:height 2.2s cubic-bezier(.25,.8,.3,1) !important;}
+  html.jgo .jline::after{width:2px !important; height:100%;}
+  .jtip{top:0 !important; left:50% !important; margin:-4.5px 0 0 -3.5px !important; transition:top 2.2s cubic-bezier(.25,.8,.3,1), opacity .5s ease !important;}
+  html.jgo .jtip{top:100% !important; left:50% !important;}
+}
+@media (max-width:960px) and (max-height:620px){
+  .filmstage video{height:min(46vh, calc(100dvh - 205px)) !important;}
+  .filmintro{top:min(46vh, calc(100dvh - 205px)) !important; padding-top:12px !important;}
+  .filmintro h1{font-size:22px !important; margin-bottom:8px !important;}
+  .filmintro p{font-size:13px !important; margin-bottom:12px !important;}
+  .filmchip{top:calc(min(46vh, 100dvh - 205px) - 52px) !important;}
+}
 </style>
 <script>
 (function(){
@@ -174,6 +207,19 @@ html.jgo .jtip{left:100%; opacity:1;}
   function init(){
     var el=document.querySelector('.jline');
     if(!el){ return setTimeout(init,150); }
+    // vertical beam (mobile): end it on the last step's circle, whatever the text height
+    var fit=function(){
+      if(window.innerWidth>620){ el.style.removeProperty('bottom'); return; }
+      var wrap=el.parentElement, kids=[].filter.call(wrap.children,function(c){return c!==el;});
+      var last=kids[kids.length-1];
+      if(!last) return;
+      var dot=last.querySelector('div');
+      if(!dot) return;
+      var tail=wrap.getBoundingClientRect().bottom-(dot.getBoundingClientRect().top+dot.offsetHeight/2);
+      el.style.setProperty('bottom',Math.max(0,Math.round(tail))+'px','important');
+    };
+    fit();
+    window.addEventListener('resize',fit);
     var io=new IntersectionObserver(function(es){
       es.forEach(function(e){ if(e.isIntersecting){ document.documentElement.classList.add('jgo'); io.disconnect(); } });
     },{threshold:0.35});
@@ -306,31 +352,31 @@ html.jgo .jtip{left:100%; opacity:1;}
       </div>
 
       <!-- chapter chips -->
-      <div ref="{{ chip1Ref }}" style="position:absolute; left:40px; bottom:52px; opacity:0; z-index:20; pointer-events:none;">
+      <div ref="{{ chip1Ref }}" class="filmchip" style="position:absolute; left:40px; bottom:52px; opacity:0; z-index:20; pointer-events:none;">
         <div style="display:inline-flex; align-items:center; gap:12px; background:rgba(10,27,36,.72); border-left:3px solid #AD8A57; padding:14px 22px; backdrop-filter:blur(6px);">
           <span style="font-family:'Playfair Display',serif; font-weight:700; font-size:22px; color:#AD8A57;">06:55</span>
           <span style="font-family:'Source Sans 3',sans-serif; font-weight:700; font-size:13px; letter-spacing:2.5px; color:#FBF5EA;">ON AIR · THE SIGNAL GOES OUT</span>
         </div>
       </div>
-      <div ref="{{ chipCarRef }}" style="position:absolute; left:40px; bottom:52px; opacity:0; z-index:20; pointer-events:none;">
+      <div ref="{{ chipCarRef }}" class="filmchip" style="position:absolute; left:40px; bottom:52px; opacity:0; z-index:20; pointer-events:none;">
         <div style="display:inline-flex; align-items:center; gap:12px; background:rgba(10,27,36,.72); border-left:3px solid #AD8A57; padding:14px 22px; backdrop-filter:blur(6px);">
           <span style="font-family:'Playfair Display',serif; font-weight:700; font-size:22px; color:#AD8A57;">07:15</span>
           <span style="font-family:'Source Sans 3',sans-serif; font-weight:700; font-size:13px; letter-spacing:2.5px; color:#FBF5EA;">RADIO · THE MORNING DRIVE</span>
         </div>
       </div>
-      <div ref="{{ chip2Ref }}" style="position:absolute; left:40px; bottom:52px; opacity:0; z-index:20; pointer-events:none;">
+      <div ref="{{ chip2Ref }}" class="filmchip" style="position:absolute; left:40px; bottom:52px; opacity:0; z-index:20; pointer-events:none;">
         <div style="display:inline-flex; align-items:center; gap:12px; background:rgba(10,27,36,.72); border-left:3px solid #AD8A57; padding:14px 22px; backdrop-filter:blur(6px);">
           <span style="font-family:'Playfair Display',serif; font-weight:700; font-size:22px; color:#AD8A57;">08:05</span>
           <span style="font-family:'Source Sans 3',sans-serif; font-weight:700; font-size:13px; letter-spacing:2.5px; color:#FBF5EA;">THE HIGH STREET · OUTDOOR</span>
         </div>
       </div>
-      <div ref="{{ chip3Ref }}" style="position:absolute; left:40px; bottom:52px; opacity:0; z-index:20; pointer-events:none;">
+      <div ref="{{ chip3Ref }}" class="filmchip" style="position:absolute; left:40px; bottom:52px; opacity:0; z-index:20; pointer-events:none;">
         <div style="display:inline-flex; align-items:center; gap:12px; background:rgba(10,27,36,.72); border-left:3px solid #AD8A57; padding:14px 22px; backdrop-filter:blur(6px);">
           <span style="font-family:'Playfair Display',serif; font-weight:700; font-size:22px; color:#AD8A57;">08:40</span>
           <span style="font-family:'Source Sans 3',sans-serif; font-weight:700; font-size:13px; letter-spacing:2.5px; color:#FBF5EA;">THE BUS STOP · SHELTER &amp; TRANSPORT</span>
         </div>
       </div>
-      <div ref="{{ chip4Ref }}" style="position:absolute; left:40px; bottom:52px; opacity:0; z-index:20; pointer-events:none;">
+      <div ref="{{ chip4Ref }}" class="filmchip" style="position:absolute; left:40px; bottom:52px; opacity:0; z-index:20; pointer-events:none;">
         <div style="display:inline-flex; align-items:center; gap:12px; background:rgba(10,27,36,.72); border-left:3px solid #AD8A57; padding:14px 22px; backdrop-filter:blur(6px);">
           <span style="font-family:'Playfair Display',serif; font-weight:700; font-size:22px; color:#AD8A57;">19:00</span>
           <span style="font-family:'Source Sans 3',sans-serif; font-weight:700; font-size:13px; letter-spacing:2.5px; color:#FBF5EA;">PRIME TIME · TV AT HOME</span>
@@ -803,6 +849,7 @@ class Component extends DCLogic {
     srcs.forEach((s, i) => {
       const vEl = this.vids[i];
       if (vEl) {
+        // scrub the native file straight away (works on any server with Range support)
         const mark = () => { this.ready[i] = true; };
         if (vEl.readyState >= 2) mark(); else vEl.addEventListener("loadeddata", mark, { once: true });
       }

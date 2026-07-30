@@ -126,6 +126,26 @@ html.mopen body{overflow:hidden;}
 .ddpanel::before{content:""; position:absolute; top:-18px; left:-24px; right:-24px; height:22px;}
 .ddpanel::after{content:""; position:absolute; left:0; right:0; bottom:-16px; height:16px;}
 @media (max-width:1180px){.ddpanel{left:auto !important; right:0 !important; margin-left:0;}}
+
+/* --- mobile refinements --- */
+@media (max-width:960px){
+  /* channel card grids stack properly */
+  .cgrid{grid-template-columns:repeat(2,1fr) !important;}
+  /* hero caption card sits under the image instead of covering it */
+  .card-in{position:static !important; right:auto !important; bottom:auto !important; max-width:none !important; margin-top:12px; padding:14px 16px !important; box-shadow:0 3px 10px rgba(120,94,52,.14) !important;}
+  /* photo strip: show a different shot to the hero */
+  .m-col > .ph:first-child{display:none !important;}
+  .m-col > .ph:nth-child(2){display:block !important;}
+}
+@media (max-width:620px){
+  .cgrid{grid-template-columns:1fr !important;}
+  /* journey beam runs vertically down the stacked steps */
+  .jline{display:block !important; top:31px !important; bottom:120px !important; left:calc(50% - 1px) !important; right:auto !important; width:2px !important; height:auto !important;}
+  .jline::after{width:2px !important; height:0; bottom:auto !important; background:linear-gradient(180deg, rgba(173,138,87,.5), #AD8A57 60%, #e8cd9a) !important; transition:height 2.2s cubic-bezier(.25,.8,.3,1) !important;}
+  html.jgo .jline::after{width:2px !important; height:100%;}
+  .jtip{top:0 !important; left:50% !important; margin:-4.5px 0 0 -3.5px !important; transition:top 2.2s cubic-bezier(.25,.8,.3,1), opacity .5s ease !important;}
+  html.jgo .jtip{top:100% !important; left:50% !important;}
+}
 </style>
 <script>
 (function(){
