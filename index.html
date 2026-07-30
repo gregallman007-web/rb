@@ -111,11 +111,12 @@ html.mopen body{overflow:hidden;}
   .filmstage{height:100vh !important; height:100dvh !important;}
   .filmwrap{height:400vh !important;}
   /* film keeps its original crop as a band at the top; the copy sits in the navy beneath it */
-  .filmstage video{height:min(58vh, calc(100dvh - 270px)) !important; object-fit:cover !important; object-position:center !important;}
-  .filmintro{top:min(58vh, calc(100dvh - 270px)) !important; bottom:0 !important; align-items:center !important; padding:22px 22px 0 !important;}
+  .filmstage{--band:min(58vh, calc(100dvh - 270px));}
+  .filmstage video{height:var(--band) !important; object-fit:cover !important; object-position:center !important;}
+  .filmintro{top:var(--band) !important; bottom:0 !important; align-items:center !important; padding:22px 22px 0 !important;}
   .filmintro h1{font-size:30px !important; margin-bottom:12px !important;}
   .filmintro > div{max-width:none !important;}
-  .filmchip{top:calc(min(58vh, 100dvh - 270px) - 62px) !important; bottom:auto !important; left:22px !important; right:22px !important;}
+  .filmchip{top:calc(var(--band) - 62px) !important; bottom:auto !important; left:22px !important; right:22px !important;}
   .filmchip > div{padding:11px 16px !important;}
   .filmchip span:first-child{font-size:19px !important;}
   .filmchip span:last-child{font-size:11px !important; letter-spacing:1.8px !important;}
@@ -163,11 +164,10 @@ html.jgo .jtip{left:100%; opacity:1;}
   html.jgo .jtip{top:100% !important; left:50% !important;}
 }
 @media (max-width:960px) and (max-height:620px){
-  .filmstage video{height:min(46vh, calc(100dvh - 205px)) !important;}
-  .filmintro{top:min(46vh, calc(100dvh - 205px)) !important; padding-top:12px !important;}
+  .filmintro{padding-top:12px !important;}
   .filmintro h1{font-size:22px !important; margin-bottom:8px !important;}
   .filmintro p{font-size:13px !important; margin-bottom:12px !important;}
-  .filmchip{top:calc(min(46vh, 100dvh - 205px) - 52px) !important;}
+
 }
 
 /* --- mobile: hero frame + vertical beam layering --- */
@@ -192,12 +192,40 @@ html.jgo .jtip{left:100%; opacity:1;}
 /* mobile scene caption occupies the navy band under the film */
 @media (max-width:960px){
   .filmcap{display:block !important; position:absolute; left:0; right:0; z-index:22; pointer-events:none;
-    top:calc(min(58vh, 100dvh - 270px) + 26px); padding:0 26px; text-align:center; opacity:0; transition:opacity .45s ease;}
+    top:calc(var(--band) + 26px); padding:0 26px; text-align:center; opacity:0; transition:opacity .45s ease;}
 }
 @media (max-width:960px) and (max-height:620px){
-  .filmcap{top:calc(min(46vh, 100dvh - 205px) + 16px); padding:0 22px;}
+  .filmcap{padding:0 22px;}
   .filmcap .captitle{font-size:21px !important;}
   .filmcap .capdesc{font-size:13px !important; margin-bottom:12px !important;}
+}
+
+/* scene 1 has ~4.2% letterbox baked into the source file; crop it, all breakpoints */
+.filmstage video.letterboxed{transform:scale(1.13); transform-origin:center;}
+
+/* vignette must stop where the film band stops, or it darkens the navy caption area */
+@media (max-width:960px){
+  .filmvig{height:var(--band) !important; bottom:auto !important;}
+}
+@media (max-width:960px) and (max-height:620px){
+
+}
+
+/* static navy panel under the film band — masks the scaled clip's overhang (the intro fades, so it can't do this job) */
+@media (max-width:960px){
+  .filmmask{display:block !important; position:absolute; left:0; right:0; bottom:0; z-index:5;
+    top:calc(var(--band) - 1px); background:#0E242F;}
+}
+@media (max-width:960px) and (max-height:620px){
+
+}
+
+@media (max-width:960px){
+  .filmstage video.letterboxed{transform:scale(1.13) !important; transform-origin:center;}
+}
+
+@media (max-width:960px) and (max-height:620px){
+  .filmstage{--band:min(46vh, calc(100dvh - 205px)) !important;}
 }
 </style>
 <script>
@@ -361,13 +389,15 @@ html.jgo .jtip{left:100%; opacity:1;}
     <!-- ============ SCROLL FILM ============ -->
   <div ref="{{ filmContainerRef }}" class="filmwrap" style="position:relative; height:520vh; background:#0E242F;">
     <div class="filmstage" style="position:sticky; top:0; height:100vh; overflow:hidden;">
-      <video ref="{{ v1Ref }}" src="assets/scene1-mast.mp4" muted="{{ true }}" playsInline="{{ true }}" preload="auto" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover;"></video>
+      <video ref="{{ v1Ref }}" class="letterboxed" src="assets/scene1-mast.mp4" muted="{{ true }}" playsInline="{{ true }}" preload="auto" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover;"></video>
       <video ref="{{ vCarRef }}" src="assets/scene-car.mp4" muted="{{ true }}" playsInline="{{ true }}" preload="auto" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; opacity:0;"></video>
-      <video ref="{{ v2Ref }}" src="assets/scene2-billboard.mp4" muted="{{ true }}" playsInline="{{ true }}" preload="auto" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; opacity:0;"></video>
-      <video ref="{{ v3Ref }}" src="assets/scene3-bus.mp4" muted="{{ true }}" playsInline="{{ true }}" preload="auto" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; opacity:0;"></video>
+      <video ref="{{ v2Ref }}" class="adscene" src="assets/scene2-billboard.mp4" muted="{{ true }}" playsInline="{{ true }}" preload="auto" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; opacity:0;"></video>
+      <video ref="{{ v3Ref }}" class="adscene" src="assets/scene3-bus.mp4" muted="{{ true }}" playsInline="{{ true }}" preload="auto" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; opacity:0;"></video>
       <video ref="{{ v4Ref }}" src="assets/scene4-tv.mp4" muted="{{ true }}" playsInline="{{ true }}" preload="auto" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; opacity:0;"></video>
       <video ref="{{ v5Ref }}" src="assets/scene5-finale.mp4" muted="{{ true }}" playsInline="{{ true }}" preload="auto" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; opacity:0;"></video>
-      <div style="position:absolute; inset:0; background:radial-gradient(ellipse at center, transparent 55%, rgba(10,27,36,.55) 100%);"></div>
+      <div class="filmvig" style="position:absolute; inset:0; background:radial-gradient(ellipse at center, transparent 55%, rgba(10,27,36,.55) 100%);"></div>
+
+      <div class="filmmask" style="display:none;"></div>
 
       <!-- intro overlay -->
       <div ref="{{ introRef }}" class="filmintro" style="position:absolute; inset:0; display:flex; align-items:center; justify-content:center; text-align:center; padding:0 30px; z-index:20; pointer-events:none;">
@@ -907,9 +937,14 @@ class Component extends DCLogic {
         const mark = () => { this.ready[i] = true; };
         if (vEl.readyState >= 2) mark(); else vEl.addEventListener("loadeddata", mark, { once: true });
       }
+      // fallback only: if the server can't serve ranges, the element never reports loadeddata —
+      // fetch the file into memory then. Avoids a duplicate ~16MB download on normal hosting.
+      setTimeout(() => {
+      if (this.ready[i]) return;
       fetch(s).then(r => r.blob()).then(b => {
         const v = this.vids[i];
         if (!v) return;
+        if (this.ready[i]) return;
         const u = URL.createObjectURL(b);
         this._blobUrls.push(u);
         const at = v.currentTime;
@@ -917,6 +952,7 @@ class Component extends DCLogic {
         v.addEventListener("loadeddata", () => { try { v.currentTime = at; } catch (e) {} }, { once: true });
         this.ready[i] = true;
       }).catch(() => {});
+      }, 4000);
     });
     this._raf = requestAnimationFrame(this.tick);
   }
